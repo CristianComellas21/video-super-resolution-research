@@ -1,0 +1,97 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# -------------------------
+# IDE / editors
+# -------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# -------------------------
+# OS
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Hydra / experiments
+# -------------------------
+logs/
+outputs/
+multirun/
+
+# -------------------------
+# PyTorch checkpoints
+# -------------------------
+*.ckpt
+*.pth
+*.pt
+*.p
+
+checkpoints/*
+# Keep the directory path needed for SpyNet
+!checkpoints/flow/
+!checkpoints/flow/spynet/
+!checkpoints/flow/spynet/spynet_sintel_final-3d2a1287.pth
+
+# -------------------------
+# TensorBoard
+# -------------------------
+events.out.tfevents.*
+
+# -------------------------
+# Cache
+# -------------------------
+.cache/
+.pytest_cache/
+.mypy_cache/
+
+# -------------------------
+# Temporary files
+# -------------------------
+*.tmp
+*.temp
+*.log
+
+# -------------------------
+# Data
+# -------------------------
+data/
+
+# -------------------------
+# Local configuration / secrets
+# -------------------------
+.env
+.env.*
+
+# -------------------------
+# Logs directory
+# -------------------------
+logs/
+
+# -------------------------
+# Condor
+# -------------------------
+condor_logs/
+condor_jobs/
+
+# -------------------------
+# Custom rules
+# -------------------------
+fast_tests/
+_old/
+external/
+artifacts/
