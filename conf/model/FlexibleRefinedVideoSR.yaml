@@ -1,0 +1,37 @@
+_target_: models.FlexibleRefinedVideoSR.Model
+
+# Model configuration
+in_channels: 3
+feat_ch: 64
+num_feat_blocks: 5
+num_stages: 3
+scale: 4
+output_mode: center
+
+# Flow configuration
+freeze_flownet: True
+flownet:
+  _target_: basicsr.archs.spynet_arch.SpyNet
+  load_path: ${path.checkpoint_dir}/flow/spynet/spynet_sintel_final-3d2a1287.pth
+
+# Module configuration
+fill_mode: last
+
+# Fusion configuration
+share_fusion: False
+fusions: 
+  - _target_: modules.fusion.WarpConcatFusion
+    feat_ch: 64
+    num_blocks: 2
+    
+# Refiner configuration
+share_refiner: True
+refiners:
+  - _target_: modules.blocks.SimpleUNet
+    in_ch: 64
+    out_ch: 64
+    base_ch: 64
+    num_levels: 2
+    reduction: 1
+    max_ch: 256
+    use_residual: true

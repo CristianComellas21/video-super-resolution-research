@@ -1,0 +1,12 @@
+_target_: models.SimpleVideoSR.Model
+
+in_channels: 3
+feat_ch: 64
+num_feat_blocks: 5
+fusion_blocks: 2
+num_stages: 3
+share_fusion: False
+scale: 4
+spynet_path: ${path.checkpoint_dir}/flow/spynet/spynet_sintel_final-3d2a1287.pth
+freeze_spynet: True
+output_mode: center

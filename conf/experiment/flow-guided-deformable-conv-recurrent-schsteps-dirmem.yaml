@@ -1,0 +1,36 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingLRSteps
+  - override /dataloader: BasicDataloader
+  - override /model: FlexibleRecurrentVideoSRDirectionalMem
+  - override /litmodule: LitStepBased
+  - override /trainer: MixedPrecisionTrainer
+  - override /optimizer: AdamW
+
+model:
+
+  feat_ch: 128
+  num_feat_blocks: 5
+
+  fusions: 
+  - _target_: modules.fusion.FlowGuidedDeformableConcatFusion
+    feat_ch: 128
+    num_blocks: 4
+    kernel_size: 3
+    use_residual_offsets: true
+    offset_hidden_ch: 64
+    use_final_residual: true
+
+trainer:
+  max_steps: 300000
+  val_check_interval: 5000
+  check_val_every_n_epoch: null
+
+dataloader:
+  train:
+    drop_last: true
+
+dataset:
+  val:
+    max_samples: 1000

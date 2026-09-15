@@ -1,0 +1,37 @@
+defaults:
+  # - base_config
+  - _self_
+  - model: SimpleVideoSR
+  - dataset: DatasetVideoRecurrentREDS
+  - trainer: BasicTrainer
+  - dataloader: BasicDataloader
+  - optimizer: Adam
+  - criterion: L1Loss
+  - scheduler: Identity
+  - path: tbserver
+  - litmodule: LitAdvanced
+
+
+checkpoint: ???
+
+checkpoint_mode: null # None | best | last | ema
+
+override_hyperparams: false
+
+hydra:
+  job:
+    config:
+      override_dirname:
+        exclude_keys:
+          - checkpoint
+          - path
+  run:
+    dir: ./logs/${hydra:runtime.choices.experiment}/${hydra:runtime.choices.model}/${now:%Y-%m-%d}/${now:%H-%M-%S}/${hydra.job.override_dirname}
+
+  # launcher: 
+  #   n_jobs: 8
+
+  sweep:
+    dir: ./logs/multirun/${hydra:runtime.choices.experiment}/${hydra:runtime.choices.model}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.override_dirname}
+ 

@@ -1,0 +1,29 @@
+# defaults:
+#   - base_dataloader
+
+common:
+  
+
+train:
+  _target_: torch.utils.data.DataLoader
+  shuffle: True
+  batch_size: 16
+  num_workers: 25
+  drop_last: False
+  pin_memory: True
+
+val:
+  _target_: torch.utils.data.DataLoader
+  shuffle: False
+  batch_size: 16
+  num_workers: 25
+  drop_last: False
+  pin_memory: True
+
+test:
+  _target_: torch.utils.data.DataLoader
+  batch_size: 1
+  shuffle: False
+  num_workers: 0
+  drop_last: False
+  pin_memory: True

@@ -1,0 +1,33 @@
+_target_: models.IARTOriginal.Model
+
+# Firma de salida compatible con el flow del repo: center | all
+output_mode: center
+
+# Selección de pesos originales IART: reds_n6 | reds_n16 | vimeo_bi | vimeo_bd
+pretrained_variant: reds_n16
+
+# Si defines pretrained_path, tiene prioridad sobre pretrained_variant.
+pretrained_path: null
+
+# Ponlo en false para entrenar desde cero sin cargar pesos IART.
+load_pretrained: true
+
+# Rutas base (puedes sobreescribir si mueves el repo IART)
+spynet_path: ${path.checkpoint_dir}/flow/spynet/spynet_sintel_final-3d2a1287.pth
+
+# Arquitectura original IART
+in_channels: 3
+mid_channels: 64
+embed_dim: 120
+depths: [6, 6, 6]
+num_heads: [6, 6, 6]
+window_size: [3, 8, 8]
+num_frames: 3
+img_size: 64
+patch_size: 1
+cpu_cache_length: 100
+is_low_res_input: true
+use_checkpoint: [true, true, true, true]
+
+# Carga de pesos
+strict_load: true

@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - /flownet: RAFT
+  - override /scheduler: StepLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleVideoSR
+
+model:
+  fusions: 
+  - _target_: modules.fusion.WarpConcatFusion
+    feat_ch: 64
+    num_blocks: 2
+  
+  flownet: ${flownet}
+
+trainer:
+  check_val_every_n_epoch: 10

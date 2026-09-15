@@ -1,0 +1,9 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingWarmRestarts
+  - override /dataset: DatasetRandomPatchesSubset
+  - override /dataloader: RandomSamplerDataloader
+
+trainer:
+  check_val_every_n_epoch: 10

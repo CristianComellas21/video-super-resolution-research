@@ -1,0 +1,5 @@
+# defaults:
+#   - base_optimizer
+ 
+_target_: torch.optim.Adam
+lr: 0.0001

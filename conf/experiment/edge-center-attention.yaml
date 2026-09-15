@@ -1,0 +1,22 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: StepLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleVideoSREdgeCenter
+
+model:
+  center_fusions:
+    - _target_: modules.fusion.WarpLocalDenseAttentionChunkedFusion
+      feat_ch: 64
+      attn_ch: null
+      win: 5
+      num_blocks: 1
+      chunk_size: 512
+  edge_fusions:
+    - _target_: modules.fusion.WarpConcatEdgeFusion
+      feat_ch: 64
+      num_blocks: 2
+
+trainer:
+  check_val_every_n_epoch: 10

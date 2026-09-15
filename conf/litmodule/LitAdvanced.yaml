@@ -1,0 +1,4 @@
+# defaults:
+#   - base_litmodule
+
+_target_: litmodules.LitAdvanced.LitModule

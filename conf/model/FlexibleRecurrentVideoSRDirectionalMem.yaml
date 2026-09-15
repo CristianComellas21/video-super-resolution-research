@@ -1,0 +1,27 @@
+_target_: models.FlexibleRecurrentVideoSRDirectionalMem.Model
+
+
+# Model configuration
+in_channels: 3
+feat_ch: 64
+num_feat_blocks: 5
+num_stages: 3
+scale: 4
+output_mode: center
+
+# Alternating recurrent specific
+history_fill: replicate   # replicate | zeros
+
+# Flow configuration
+freeze_flownet: True
+flownet:
+  _target_: basicsr.archs.spynet_arch.SpyNet
+  load_path: ${path.checkpoint_dir}/flow/spynet/spynet_sintel_final-3d2a1287.pth
+
+# Fusion configuration
+share_fusion: False
+fill_mode: last
+fusions:
+  - _target_: modules.fusion.WarpConcatFusion
+    feat_ch: 64
+    num_blocks: 2

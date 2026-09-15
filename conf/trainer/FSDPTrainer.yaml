@@ -1,0 +1,22 @@
+# defaults:
+#   - base_trainer
+
+log_every_n_steps: 10
+check_val_every_n_epoch: 1
+accumulate_grad_batches: 1
+
+accelerator: gpu
+devices: [0, 1]
+precision: bf16
+
+strategy:
+  _target_: lightning.pytorch.strategies.FSDPStrategy
+  use_orig_params: true
+  auto_wrap_policy:
+    _target_: torch.distributed.fsdp.wrap.size_based_auto_wrap_policy
+    _partial_: true
+    min_num_params: 1000000
+
+  ignored_modules:
+    - lpips
+    - dists

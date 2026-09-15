@@ -1,0 +1,4 @@
+# @package _global_
+
+checkpoint: null
+reset_best_on_resume: true

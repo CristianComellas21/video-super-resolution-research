@@ -1,0 +1,26 @@
+_target_: datasets.DatasetVideoRecurrent.Dataset
+
+dataname: ???
+dataroot_gt: ${path.data_test_dir}/${.dataname}/GT
+dataroot_lq: ${path.data_test_dir}/${.dataname}/sharp_bicubic
+seq_len: 3
+stride: 1
+meta_info_file: null
+max_depth: 2
+max_samples: null
+spatial_crop_size: null
+spatial_crop_mode: center
+
+num_folders: null
+shuffle_folders: false
+folders_seed: null
+
+sequences_per_folder: null
+shuffle_within_folder: false
+sequences_seed: null
+
+train: {}
+
+val: {}
+
+test: {}

@@ -1,0 +1,45 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingLRSteps
+  - override /dataloader: BasicDataloader
+  - override /model: FlexibleRecurrentVideoSR
+  - override /litmodule: LitStepBased
+  - override /trainer: MixedPrecisionTrainer
+
+model:
+  in_channels: 3
+  feat_ch: 200
+  num_feat_blocks: 4
+  num_stages: 3
+  scale: 4
+  output_mode: center
+
+  fusions: 
+  - _target_: modules.fusion.FlowGuidedLocalDenseAttentionChunkedFusion
+    feat_ch: 200
+    attn_ch: 100
+    win: 5
+    num_blocks: 2
+    chunk_size: 1024
+    share_qk: true
+
+
+trainer:
+  max_steps: 200000
+  val_check_interval: 5000
+  check_val_every_n_epoch: null
+  accumulate_grad_batches: 4
+
+dataloader:
+  train:
+    drop_last: true
+    batch_size: 4
+
+  val:
+    batch_size: 4
+
+
+dataset:
+  val:
+    max_samples: 1000

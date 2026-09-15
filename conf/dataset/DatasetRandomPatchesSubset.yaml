@@ -1,0 +1,41 @@
+_target_: datasets.DatasetRandomPatchesSubset.Dataset
+
+root: ${path.data_dir}
+patch_size: 64 #64 #512
+variance_range: [1, 30]
+fixed_variance: null
+
+train:
+  split: train
+  transforms:
+    _target_: albumentations.Compose
+    _args_:
+      - - _target_: albumentations.RandomCrop
+          height: 64
+          width: 64
+          p: 1
+        - _target_: albumentations.VerticalFlip
+          p: 0.5
+        - _target_: albumentations.HorizontalFlip
+          p: 0.5
+        - _target_: albumentations.RandomRotate90
+          p: 0.5
+        - _target_: albumentations.pytorch.ToTensorV2
+  
+val:
+  split: val
+  transforms:
+    _target_: albumentations.Compose
+    _args_:
+      - - _target_: albumentations.CenterCrop
+          height: 64
+          width: 64
+          p: 1
+        - _target_: albumentations.pytorch.ToTensorV2
+
+test:
+  split: test
+  transforms:
+    _target_: albumentations.Compose
+    _args_:
+      - - _target_: albumentations.pytorch.ToTensorV2

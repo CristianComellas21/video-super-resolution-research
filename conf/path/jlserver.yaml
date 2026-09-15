@@ -1,0 +1,3 @@
+checkpoint_dir: /home/cristian/phd/super-resolution/code/checkpoints
+data_dir: /home/cristian/phd/super-resolution/data/sr/trainsets
+data_test_dir: /home/cristian/phd/super-resolution/data/sr/testsets

@@ -1,0 +1,6 @@
+_target_: torch.optim.lr_scheduler.LambdaLR
+lr_lambda:
+  _target_: utils.factory.create_lambda
+  expression: "1"
+  args:
+    - x

@@ -1,0 +1,29 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: StepLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleRefinedVideoSR
+
+model:
+
+  feat_ch: 128
+  num_feat_blocks: 5
+
+  fusions: 
+  - _target_: modules.fusion.WarpConcatFusion
+    feat_ch: 128
+    num_blocks: 4
+
+  refiners:
+  - _target_: modules.blocks.SimpleUNet
+    in_ch: 128
+    out_ch: 128
+    base_ch: 128
+    num_levels: 2
+    reduction: 1
+    max_ch: 256
+    use_residual: true
+
+trainer:
+  check_val_every_n_epoch: 10

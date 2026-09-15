@@ -1,0 +1,31 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: StepLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleRecurrentVideoSR
+
+model:
+
+  feat_ch: 128
+  num_feat_blocks: 5
+
+  fusions: 
+  - _target_: modules.fusion.FlowGuidedDeformableConcatNAFFusion
+    feat_ch: 128
+    num_blocks: 4
+    kernel_size: 3
+    use_residual_offsets: true
+    offset_hidden_ch: 64
+    use_final_residual: true
+
+trainer:
+  check_val_every_n_epoch: 10
+  accumulate_grad_batches: 4
+
+
+dataloader:
+  train:
+    batch_size: 4
+  val:
+    batch_size: 4

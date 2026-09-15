@@ -1,0 +1,55 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingLRSteps
+  - override /dataloader: BasicDataloader
+  - override /model: FlexibleRecurrentVideoSR
+  - override /litmodule: LitStepBased
+  - override /trainer: MixedPrecisionTrainer
+  - override /optimizer: AdamW
+
+model:
+
+  feat_ch: 128
+  num_feat_blocks: 5
+
+  fusions: 
+  - _target_: modules.fusion.FlowGuidedDeformableTransformerFusion
+    feat_ch: 128
+    num_blocks: 3
+    kernel_size: 3
+    use_residual_offsets: true
+    offset_hidden_ch: 50
+    use_final_residual: true
+    transformer_depth: 2  
+    transformer_num_heads: 4
+    transformer_win: 3
+    transformer_mlp_ratio: 1.5
+    transformer_chunk_size: 1024
+    transformer_return_delta: true
+
+ema:
+  enabled: true
+  decay: 0.999
+  start_step: 10000
+  save_last_ema: true
+  ema_ckpt_name: last_ema.ckpt
+  use_buffers: true
+
+  save_on_validation: true
+  latest_ema_ckpt_name: latest_ema.ckpt
+
+trainer:
+  max_steps: 300000
+  val_check_interval: 5000
+  check_val_every_n_epoch: null
+  accumulate_grad_batches: 4
+
+dataloader:
+  train:
+    drop_last: true
+    batch_size: 4
+
+dataset:
+  val:
+    max_samples: 1000

@@ -1,0 +1,3 @@
+checkpoint_dir: /home/cristiancomellas/phd/super-resolution/code/checkpoints
+data_dir: /mnt/sdd2/datasets/sr/trainsets
+data_test_dir: /mnt/sdd2/datasets/sr/testsets

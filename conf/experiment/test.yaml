@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - override /dataset: DatasetTest
+  - override /trainer: TestTrainer
+
+litmodule:
+  test_stride: [25, 25]
+
+hydra:
+  run:
+    dir: ./logs/${hydra:runtime.choices.experiment}/${checkpoint}
+
+
+dataset:
+  root: /mnt/sdd2/datasets/png/UIB_SINGLE_IMAGE_GRAY/test
+

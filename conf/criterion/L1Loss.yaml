@@ -1,0 +1,4 @@
+# defaults:
+#   - base_criterion
+
+_target_: torch.nn.L1Loss

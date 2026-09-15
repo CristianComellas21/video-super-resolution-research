@@ -1,0 +1,19 @@
+_target_: datasets.DatasetVideoRecurrentHRBicubic.Dataset
+
+dataname: Vimeo90k_sep
+dataroot_gt: ${path.data_dir}/${.dataname}/sequence_hr
+seq_len: 3
+stride: 1
+scale: 4
+meta_info_file: null
+max_depth: 2
+max_samples: null
+
+train:
+  meta_info_file: ${path.data_dir}/${..dataname}/sep_trainlist.txt
+
+val:
+  meta_info_file: ${path.data_dir}/${..dataname}/sep_testlist.txt
+  max_samples: 100
+
+test: {}

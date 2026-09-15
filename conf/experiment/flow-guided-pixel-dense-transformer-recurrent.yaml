@@ -1,0 +1,46 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleRecurrentVideoSR
+  - override /trainer: MixedPrecisionTrainer
+
+model:
+  in_channels: 3
+  feat_ch: 200
+  num_feat_blocks: 4
+  num_stages: 3
+  scale: 4
+  output_mode: center
+
+  fusions: 
+  - _target_: modules.fusion.FlowGuidedLocalTransformerFusionBlock
+    feat_ch: 200
+    attn_ch: 100
+    win: 5
+    chunk_size: 1024
+    share_qk: false
+    mlp_ratio: 2.0
+
+trainer:
+  check_val_every_n_epoch: 10
+  accumulate_grad_batches: 1
+
+# optimizer:
+#   _target_: torch.optim.AdamW
+#   lr: 5.0e-5
+#   weight_decay: 1.0e-4
+
+# scheduler:
+#   _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+#   T_max: 1000
+#   eta_min: 1.0e-7
+
+
+# dataloader:
+#   train:
+#     batch_size: 12
+#     sampler:
+#       replacement: true
+#       num_samples: 1000

@@ -1,0 +1,36 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingLRSteps
+  - override /dataloader: BasicDataloader
+  - override /dataset: DatasetVideoRecurrentREDS
+  - override /model: IARTOriginal
+  - override /trainer: MixedPrecisionTrainer
+  # - override /optimizer: DeepspeedAdam
+  - override /litmodule: LitStepBased
+
+model:
+  output_mode: center
+  load_pretrained: false
+  pretrained_path: null
+  strict_load: true
+  use_checkpoint: [true, true, true, true]
+
+dataloader:
+  train:
+    batch_size: 4
+    num_workers: 8
+    drop_last: true
+  val:
+    batch_size: 4
+    num_workers: 8
+
+trainer:
+  max_steps: 50000
+  val_check_interval: 5000
+  check_val_every_n_epoch: null
+  accumulate_grad_batches: 4
+
+dataset:
+  val:
+    max_samples: 1000

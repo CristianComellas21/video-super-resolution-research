@@ -1,0 +1,6 @@
+# defaults:
+#   - base_optimizer
+
+_target_: torch.optim.AdamW
+lr: 0.0001
+weight_decay: 1.0e-5

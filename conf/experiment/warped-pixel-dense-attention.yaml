@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleVideoSR
+  - override /trainer: MixedPrecisionTrainer
+
+model:
+  in_channels: 3
+  feat_ch: 128
+  num_feat_blocks: 4
+  num_stages: 3
+  scale: 4
+  output_mode: center
+
+  fusions: 
+  - _target_: modules.fusion.WarpLocalDenseAttentionChunkedFusion
+    feat_ch: 128
+    attn_ch: 64
+    win: 5
+    num_blocks: 4
+    chunk_size: 1024
+
+
+trainer:
+  check_val_every_n_epoch: 10

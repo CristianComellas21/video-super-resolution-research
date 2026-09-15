@@ -1,0 +1,15 @@
+_target_: criterions.WeightedLoss.Criterion
+normalize: false
+
+loss_dict:
+  l1:
+    - _target_: torch.nn.L1Loss
+      reduction: mean
+    - 1.0 # weight
+
+  laplacian_l1:
+    - _target_: criterions.LaplacianLoss.Criterion
+      base_loss:
+        _target_: torch.nn.L1Loss
+        reduction: mean
+    - 0.05 # weight

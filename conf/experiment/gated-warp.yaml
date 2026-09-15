@@ -1,0 +1,15 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: StepLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleVideoSR
+
+model:
+  fusions: 
+  - _target_: modules.fusion.WarpGatedFusion
+    feat_ch: 64
+    num_blocks: 2
+
+trainer:
+  check_val_every_n_epoch: 10

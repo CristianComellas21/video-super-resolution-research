@@ -1,0 +1,20 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: StepLR
+  - override /dataloader: RandomSamplerDataloader
+  - override /model: FlexibleVideoSR
+
+model:
+  fusions: 
+  - _target_: modules.fusion.WarpLocalTopKThenFullAttentionChunkedFusion
+    feat_ch: 64
+    attn_ch: null
+    win: 5
+    k: 16
+    num_blocks: 1
+    chunk_size: 512
+
+
+trainer:
+  check_val_every_n_epoch: 10
