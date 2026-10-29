@@ -2,10 +2,10 @@ version = 1
 revision = 3
 requires-python = "==3.11.*"
 resolution-markers = [
-    "sys_platform == 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
+    "sys_platform == 'darwin' and extra != 'group-16-super-resolution-artemisa' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
+    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux' and extra != 'group-16-super-resolution-artemisa' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-artemisa' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-artemisa' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')",
+    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra != 'group-16-super-resolution-artemisa' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
     "sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia'",
     "platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia'",
     "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')",
@@ -15,6 +15,9 @@ resolution-markers = [
 ]
 conflicts = [[
     { package = "super-resolution", group = "jlserver" },
+    { package = "super-resolution", group = "talaia" },
+], [
+    { package = "super-resolution", group = "artemisa" },
     { package = "super-resolution", group = "talaia" },
 ]]
 
@@ -148,13 +151,11 @@ dependencies = [
     { name = "scikit-image" },
     { name = "scipy" },
     { name = "tb-nightly" },
-    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
     { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "torch", version = "2.15.0", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "torchvision", version = "0.21.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "torchvision", version = "0.22.1", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "torchvision", version = "0.22.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "torchvision", version = "0.29.2", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
+    { name = "torchvision", version = "0.21.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "torchvision", version = "0.22.1", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "torchvision", version = "0.22.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
     { name = "tqdm" },
     { name = "yapf" },
 ]
@@ -252,74 +253,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/0a/59/ebfb8c677c75605cc27f7122c90313fd2f375ff3c8d19a1694bda74aaa63/contourpy-1.3.3-pp311-pypy311_pp73-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:70f9aad7de812d6541d29d2bbf8feb22ff7e1c299523db288004e3157ff4674e", size = 302202, upload-time = "2025-07-26T12:02:55.947Z" },
     { url = "https://files.pythonhosted.org/packages/3c/37/21972a15834d90bfbfb009b9d004779bd5a07a0ec0234e5ba8f64d5736f4/contourpy-1.3.3-pp311-pypy311_pp73-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:5ed3657edf08512fc3fe81b510e35c2012fbd3081d2e26160f27ca28affec989", size = 329207, upload-time = "2025-07-26T12:02:57.468Z" },
     { url = "https://files.pythonhosted.org/packages/0c/58/bd257695f39d05594ca4ad60df5bcb7e32247f9951fd09a9b8edb82d1daa/contourpy-1.3.3-pp311-pypy311_pp73-win_amd64.whl", hash = "sha256:3d1a3799d62d45c18bafd41c5fa05120b96a28079f2393af559b843d1a966a77", size = 225315, upload-time = "2025-07-26T12:02:58.801Z" },
-]
-
-[[package]]
-name = "cuda-bindings"
-version = "13.4.4"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "cuda-pathfinder", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a1/15/0277326dd1a2d619ea8a85b790fc9e43cb67897d3a3377eb783f5bc2a33a/cuda_bindings-13.4.4-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:b8b2e4235b552edb42cdbe39de7a9259ceec631e21c7344b76177db9cc6c58b4", size = 6494096, upload-time = "2026-10-14T12:35:11.314Z" },
-    { url = "https://files.pythonhosted.org/packages/97/36/3bfb7b74817a0a78f80340fae742a27d166e8fcdffa459b79d5be66e077a/cuda_bindings-13.4.4-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e1cef1eaf5a08cc3bf3675ca9d3f97f3fc7085998556c848b4053e74ba4ba392", size = 7160763, upload-time = "2026-10-14T12:35:13.773Z" },
-    { url = "https://files.pythonhosted.org/packages/e6/ed/721396d75f4bab1876df34950752457c2aa923cbac2a51d8c98edfedc704/cuda_bindings-13.4.4-cp311-cp311-win_amd64.whl", hash = "sha256:93ad74e8181a89e7886be9d06414a772701081c9edcf6c84d9fc1ccda50f6767", size = 6114790, upload-time = "2026-10-14T12:35:16.451Z" },
-    { url = "https://files.pythonhosted.org/packages/20/01/85db21363a86547679d57375311d888cdff7eae2da1810e0f6923c299c06/cuda_bindings-13.4.4-cp311-cp311-win_arm64.whl", hash = "sha256:0d714d5a85174530b58b39a8e06664ebc6296e62a90d66b0b2eb4dbdfaaabe5b", size = 5390575, upload-time = "2026-10-14T12:35:18.551Z" },
-]
-
-[[package]]
-name = "cuda-pathfinder"
-version = "1.8.4"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/8e/93/f0904fa7d954ecc4c0db17c8d63d185d442dd59fc6757f1d1f448c59c256/cuda_pathfinder-1.8.4-py3-none-any.whl", hash = "sha256:85a4e708c725d603f576042ef32781a3d1737c51e84c35fe361d2680191af65a", size = 62594, upload-time = "2026-10-22T21:49:19.246Z" },
-]
-
-[[package]]
-name = "cuda-toolkit"
-version = "13.2.2"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/3d/62/854e4a141f5e87e5425513bad2a742a6260acfe06ef148001b5362148f31/cuda_toolkit-13.2.2-py2.py3-none-any.whl", hash = "sha256:d12edc1aad1356236a2ee10c0d794b1aff5d3e79bfeca54867c3bb8e5afd87b0", size = 2607, upload-time = "2026-07-16T10:13:01.07Z" },
-]
-
-[package.optional-dependencies]
-cublas = [
-    { name = "nvidia-cublas", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-cudart = [
-    { name = "nvidia-cuda-runtime", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-cufft = [
-    { name = "nvidia-cufft", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-cufile = [
-    { name = "nvidia-cufile", marker = "(platform_machine != 'aarch64' and platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-cupti = [
-    { name = "nvidia-cuda-cupti", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-cusolver = [
-    { name = "nvidia-cublas", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusolver", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusparse", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-cusparse = [
-    { name = "nvidia-cusparse", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-nvjitlink = [
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-nvrtc = [
-    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-nvtx = [
-    { name = "nvidia-nvtx", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (platform_machine == 'AMD64' and sys_platform == 'win32' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'win32' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 
 [[package]]
@@ -609,9 +542,8 @@ dependencies = [
     { name = "packaging" },
     { name = "pytorch-lightning" },
     { name = "pyyaml" },
-    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
     { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "torch", version = "2.15.0", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
     { name = "torchmetrics" },
     { name = "tqdm" },
     { name = "typing-extensions" },
@@ -773,19 +705,6 @@ wheels = [
 ]
 
 [[package]]
-name = "nvidia-cublas"
-version = "13.4.1.3"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "nvidia-cuda-nvrtc", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d0/a0/5cd9d4b08a8320f7ca150ee0d66c97e98092922e338336cb4b62da7500c3/nvidia_cublas-13.4.1.3-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:4eb1472bf92b741e7cf24da7978dde251b58ddec2092d9f6a04f3623eb4e9a15", size = 513048232, upload-time = "2026-07-16T09:45:07.751Z" },
-    { url = "https://files.pythonhosted.org/packages/e1/97/d483a41da34df5c88727c57319576967f6d7befba5028d70928d2999635e/nvidia_cublas-13.4.1.3-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:a5917cb642cfb07f4a0231ee16aec7e2e0357d8cb8b1b78a0c9c68dba3e6afc7", size = 404870805, upload-time = "2026-07-16T09:46:05.62Z" },
-    { url = "https://files.pythonhosted.org/packages/bc/0f/8982a363ab246d22876f3eb8baccce81f0da6304d39f86d63b67389c5457/nvidia_cublas-13.4.1.3-py3-none-win_amd64.whl", hash = "sha256:7e7f780caf07bde7b36b0d25bdad29e8ccbacfc4b75066907bdb601af1e6d4aa", size = 388920654, upload-time = "2026-07-16T10:05:36.737Z" },
-]
-
-[[package]]
 name = "nvidia-cublas-cu12"
 version = "12.4.5.8"
 source = { registry = "https://pypi.org/simple" }
@@ -809,27 +728,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ed/63/684a6f72f52671ea222c12ecde9bdf748a0ba025e2ad3ec374e466c26eb6/nvidia_cublas_cu12-12.8.3.14-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:93a4e0e386cc7f6e56c822531396de8170ed17068a1e18f987574895044cd8c3", size = 604900717, upload-time = "2025-01-23T17:52:55.486Z" },
     { url = "https://files.pythonhosted.org/packages/82/df/4b01f10069e23c641f116c62fc31e31e8dc361a153175d81561d15c8143b/nvidia_cublas_cu12-12.8.3.14-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:3f0e05e7293598cf61933258b73e66a160c27d59c4422670bf0b79348c04be44", size = 609620630, upload-time = "2025-01-23T17:55:00.753Z" },
     { url = "https://files.pythonhosted.org/packages/6c/54/fbfa3315b936d3358517f7da5f9f2557c279bf210e5261f0cf66cc0f9832/nvidia_cublas_cu12-12.8.3.14-py3-none-win_amd64.whl", hash = "sha256:9ae5eae500aead01fc4bdfc458209df638b1a3551557ce11a78eea9ece602ae9", size = 578387959, upload-time = "2025-01-23T18:08:00.662Z" },
-]
-
-[[package]]
-name = "nvidia-cuda-cccl"
-version = "13.3.4.3.1"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/21/d49f8fdb03bb4108b12291e8ff2b86491d42cd158d33c7a3a55870384114/nvidia_cuda_cccl-13.3.4.3.1-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:cd47e7823e3ab369a3e3df3a4c6dbb4cb02176cb85b251eec5f7c9cdfa528ec4", size = 3930674, upload-time = "2026-09-16T20:36:52.003Z" },
-    { url = "https://files.pythonhosted.org/packages/7b/b2/a048b57f2ee4c5ff27a329bd1c4c3fae34c84771ad0ebfea179034c8cf29/nvidia_cuda_cccl-13.3.4.3.1-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:48ba8e44a1162face51306d5bfd67604d9949be5acb9105dbb93734d2df8b3a4", size = 3930678, upload-time = "2026-09-16T20:36:58.966Z" },
-    { url = "https://files.pythonhosted.org/packages/87/65/d752aaedde677bf8ba78787f819a1cada7c496412aaa5a2a2d2f994aa62f/nvidia_cuda_cccl-13.3.4.3.1-py3-none-win_amd64.whl", hash = "sha256:d7879f58820f863c4db4237200a764d5cb992dbf99089d31aee6f2998750b002", size = 3930656, upload-time = "2026-09-16T20:46:30.98Z" },
-    { url = "https://files.pythonhosted.org/packages/90/6f/0c226d52a90a1358cb52be8b651bbaecbbff0d78ffc0dc8a71928e818ec7/nvidia_cuda_cccl-13.3.4.3.1-py3-none-win_arm64.whl", hash = "sha256:ccb02901bb259997c4bc198ad6f96f9a4fa260d9823d8a5aceabf3e3b244336f", size = 3938039, upload-time = "2026-09-16T20:53:35.467Z" },
-]
-
-[[package]]
-name = "nvidia-cuda-cupti"
-version = "13.2.86"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e1/ab/52414925ea803a5f86b994ae97d951e5943ed27a6f1da4a5c4ac09e308af/nvidia_cuda_cupti-13.2.86-py3-none-manylinux_2_25_aarch64.whl", hash = "sha256:d9a5c133f73fcb9013f3ada0da6fb54d4117618d81f3f5a0419417ea6ee829d4", size = 11760263, upload-time = "2026-07-16T09:35:34.643Z" },
-    { url = "https://files.pythonhosted.org/packages/b4/76/a10d9fb5d9a0e46d5f95e5520bd1b2d8ad22a9c0a09d2f8c20c5ee842a96/nvidia_cuda_cupti-13.2.86-py3-none-manylinux_2_25_x86_64.whl", hash = "sha256:8fa29f15dd8336181f961764d9d95236fc6b931dd0c8fcf8cd70aab0c310b586", size = 11988600, upload-time = "2026-07-16T09:36:06.061Z" },
-    { url = "https://files.pythonhosted.org/packages/fd/7a/7dadeb6faa141c07e608d9ed1dcb355c97b11b42f61106e41937e10da643/nvidia_cuda_cupti-13.2.86-py3-none-win_amd64.whl", hash = "sha256:10837e2910753a7726c0243aa113e2bd65c0edee6f6f3e097db1757a8eac2c9e", size = 8175943, upload-time = "2026-07-16T10:00:42.314Z" },
 ]
 
 [[package]]
@@ -859,16 +757,6 @@ wheels = [
 ]
 
 [[package]]
-name = "nvidia-cuda-nvrtc"
-version = "13.2.86"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1e/39/c58835ec8392a91b8d7bad83760eafc3085f64788b722ec2b44a27b3ca3e/nvidia_cuda_nvrtc-13.2.86-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl", hash = "sha256:8111c5130e967b78222ea2124145f8efe9ce201b752b2579a2513100a53be1c5", size = 47018468, upload-time = "2026-07-16T09:40:35.085Z" },
-    { url = "https://files.pythonhosted.org/packages/13/95/029e91026e1d378cba9fb2cdb62394bb15d06de7586bab73d76397df6b7f/nvidia_cuda_nvrtc-13.2.86-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:1e5d7b411a2eb83f5c71c98d58133a763fc9fa86a4241ee320c5c4782d9ad1fd", size = 44755454, upload-time = "2026-07-16T09:39:59.909Z" },
-    { url = "https://files.pythonhosted.org/packages/dd/4e/2a19f2aa79ffc822c0d2be7c161fcac5a8b43aebd554c79ff982bb44071e/nvidia_cuda_nvrtc-13.2.86-py3-none-win_amd64.whl", hash = "sha256:bf070582c2d8b03f681cea8d34a9de900d808607deb813a826ecb3a585606f9a", size = 40818138, upload-time = "2026-07-16T10:02:27.876Z" },
-]
-
-[[package]]
 name = "nvidia-cuda-nvrtc-cu12"
 version = "12.4.127"
 source = { registry = "https://pypi.org/simple" }
@@ -892,16 +780,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/d4/22/32029d4583f7b19cfe75c84399cbcfd23f2aaf41c66fc8db4da460104fff/nvidia_cuda_nvrtc_cu12-12.8.61-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl", hash = "sha256:a0fa9c2a21583105550ebd871bd76e2037205d56f33f128e69f6d2a55e0af9ed", size = 88024585, upload-time = "2025-01-23T17:50:10.722Z" },
     { url = "https://files.pythonhosted.org/packages/f1/98/29f98d57fc40d6646337e942d37509c6d5f8abe29012671f7a6eb9978ebe/nvidia_cuda_nvrtc_cu12-12.8.61-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:b1f376bf58111ca73dde4fd4df89a462b164602e074a76a2c29c121ca478dcd4", size = 43097015, upload-time = "2025-01-23T17:49:44.331Z" },
     { url = "https://files.pythonhosted.org/packages/f8/5b/052d05aa068e4752415ad03bac58e852ea8bc17c9321e08546b3f261e47e/nvidia_cuda_nvrtc_cu12-12.8.61-py3-none-win_amd64.whl", hash = "sha256:9c8887bf5e5dffc441018ba8c5dc59952372a6f4806819e8c1f03d62637dbeea", size = 73567440, upload-time = "2025-01-23T18:05:51.036Z" },
-]
-
-[[package]]
-name = "nvidia-cuda-runtime"
-version = "13.2.86"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/d4/fa981071e3d9f29158ca16c69ee617831cd6df4dd47024149c16eec717f8/nvidia_cuda_runtime-13.2.86-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:37844957894bfdecf90243568d21a2cb251b66106915b71459a23c8e6ef2da69", size = 2341433, upload-time = "2026-07-16T09:33:00.116Z" },
-    { url = "https://files.pythonhosted.org/packages/70/c6/8f8c5e893d183082ea78f973aebc7ebc845ee219d68bddac73b0f62490fe/nvidia_cuda_runtime-13.2.86-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:3498247680dfddce31bad102af7e3e26fc795342a3cac64722bb0fa95e7f60f0", size = 2323576, upload-time = "2026-07-16T09:33:28.652Z" },
-    { url = "https://files.pythonhosted.org/packages/1f/7f/0849696e8ea074fd6c30864a235ab232683c71cb8e6a88186d48fc62120f/nvidia_cuda_runtime-13.2.86-py3-none-win_amd64.whl", hash = "sha256:b26f5dd86e67f0eb404ae679185e1c49fe546fa9a47b32dee31312f65ccfe764", size = 3154679, upload-time = "2026-07-16T10:00:09.778Z" },
 ]
 
 [[package]]
@@ -938,7 +816,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-cublas-cu12", version = "12.4.5.8", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "nvidia-cublas-cu12", version = "12.4.5.8", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9f/fd/713452cd72343f682b1c7b9321e23829f00b842ceaedcda96e742ea0b0b3/nvidia_cudnn_cu12-9.1.0.70-py3-none-manylinux2014_x86_64.whl", hash = "sha256:165764f44ef8c61fcdfdfdbe769d687e06374059fbb388b6c89ecb0e28793a6f", size = 664752741, upload-time = "2024-04-22T15:24:15.253Z" },
@@ -953,38 +831,12 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-talaia'" },
+    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c1/2e/ec5dda717eeb1de3afbbbb611ca556f9d6d057470759c6abd36d72f0063b/nvidia_cudnn_cu12-9.7.1.26-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:848a61d40ef3b32bd4e1fadb599f0cf04a4b942fbe5fb3be572ad75f9b8c53ef", size = 725862213, upload-time = "2025-02-06T22:14:57.169Z" },
     { url = "https://files.pythonhosted.org/packages/25/dc/dc825c4b1c83b538e207e34f48f86063c88deaa35d46c651c7c181364ba2/nvidia_cudnn_cu12-9.7.1.26-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:6d011159a158f3cfc47bf851aea79e31bcff60d530b70ef70474c84cac484d07", size = 726851421, upload-time = "2025-02-06T22:18:29.812Z" },
     { url = "https://files.pythonhosted.org/packages/d0/ea/636cda41b3865caa0d43c34f558167304acde3d2c5f6c54c00a550e69ecd/nvidia_cudnn_cu12-9.7.1.26-py3-none-win_amd64.whl", hash = "sha256:7b805b9a4cf9f3da7c5f4ea4a9dff7baf62d1a612d6154a7e0d2ea51ed296241", size = 715962100, upload-time = "2025-02-06T22:21:32.431Z" },
-]
-
-[[package]]
-name = "nvidia-cudnn-cu13"
-version = "9.26.0.51"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "nvidia-cublas", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/c5/1c/01e1dd3dec6ffe0baaff7e722b8946d867353d05a01301f128f1730fde0b/nvidia_cudnn_cu13-9.26.0.51-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:8e5b4f5eccff721416f70ecf4353172fc4d5cdd8ca869fe6f983a4a5b0147b20", size = 595329497, upload-time = "2026-09-10T16:45:39.945Z" },
-    { url = "https://files.pythonhosted.org/packages/ac/1b/ea72dd62f26ce3e0a7870b85148b75a5987507629b712deebeb87f7cce9a/nvidia_cudnn_cu13-9.26.0.51-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:9c976d539786698c71d6bcdbe2053b7485fae062ff7e1215d2f2ff67b1a2149a", size = 519150073, upload-time = "2026-09-10T16:47:58.332Z" },
-    { url = "https://files.pythonhosted.org/packages/d6/1f/9c5d7ed254d7040192b4bb4eef669ba3ed66a3c4576c50f7d2385b255c8e/nvidia_cudnn_cu13-9.26.0.51-py3-none-win_amd64.whl", hash = "sha256:8e37a83d7dd7c2663afcae38b1c95c5e9e7c9754f313800da95ca81439fa37f9", size = 419603885, upload-time = "2026-09-10T16:51:07.436Z" },
-]
-
-[[package]]
-name = "nvidia-cufft"
-version = "12.2.0.57"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/07/8d/f650e6d527f9d22b5ded906c000eaebb037721c06d4ecd906df62f300979/nvidia_cufft-12.2.0.57-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:1ed438568ae1088ba2c25789d10205d4104b8b140b7bd942e39a787947a0fb74", size = 218244742, upload-time = "2026-07-16T09:47:08.76Z" },
-    { url = "https://files.pythonhosted.org/packages/41/28/868ed0c6ade5e6a75b25166b3cf191f4a2ff58ad618c1e40befb776c97c5/nvidia_cufft-12.2.0.57-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:34da27fadf3979b0b042c43823f0530be8408b86df31ee0108e1ca0b621d4ef6", size = 218258101, upload-time = "2026-07-16T09:47:50.978Z" },
-    { url = "https://files.pythonhosted.org/packages/b2/48/4a943a66093ec0e9e077bf584462d35d9feed297a76078a78582841985f2/nvidia_cufft-12.2.0.57-py3-none-win_amd64.whl", hash = "sha256:89b78b2b60d6ca1fb7dab7d1a4af135d69d586d18a216ca84e51db5901cd41d0", size = 217463602, upload-time = "2026-07-16T10:06:13.575Z" },
 ]
 
 [[package]]
@@ -995,7 +847,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7a/8a/0e728f749baca3fbeffad762738276e5df60851958be7783af121a7221e7/nvidia_cufft_cu12-11.2.1.3-py3-none-manylinux2014_aarch64.whl", hash = "sha256:5dad8008fc7f92f5ddfa2101430917ce2ffacd86824914c82e28990ad7f00399", size = 211422548, upload-time = "2024-06-18T19:33:39.396Z" },
@@ -1011,21 +863,12 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-talaia'" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/72/95/6157cb45a49f5090a470de42353a22a0ed5b13077886dca891b4b0e350fe/nvidia_cufft_cu12-11.3.3.41-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:68509dcd7e3306e69d0e2d8a6d21c8b25ed62e6df8aac192ce752f17677398b5", size = 193108626, upload-time = "2025-01-23T17:55:49.192Z" },
     { url = "https://files.pythonhosted.org/packages/ac/26/b53c493c38dccb1f1a42e1a21dc12cba2a77fbe36c652f7726d9ec4aba28/nvidia_cufft_cu12-11.3.3.41-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:da650080ab79fcdf7a4b06aa1b460e99860646b176a43f6208099bdc17836b6a", size = 193118795, upload-time = "2025-01-23T17:56:30.536Z" },
     { url = "https://files.pythonhosted.org/packages/32/f3/f6248aa119c2726b1bdd02d472332cae274133bd32ca5fa8822efb0c308c/nvidia_cufft_cu12-11.3.3.41-py3-none-win_amd64.whl", hash = "sha256:f9760612886786601d27a0993bb29ce1f757e6b8b173499d0ecfa850d31b50f8", size = 192216738, upload-time = "2025-01-23T18:08:51.102Z" },
-]
-
-[[package]]
-name = "nvidia-cufile"
-version = "1.17.1.22"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/fd/4b4157512a131a51e1514d40d0199b1c5b7b10c6856db274ff22e5fe15be/nvidia_cufile-1.17.1.22-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:bec33d7f1f12691dce330275246587569c2ed90b1ce43b0f94b3e1ce9268744b", size = 1226736, upload-time = "2026-04-13T09:52:40.142Z" },
-    { url = "https://files.pythonhosted.org/packages/23/c5/661a73a9042fc5f81cdd5fe6e89f4170b3b33f7962e709987e2b5e5f1381/nvidia_cufile-1.17.1.22-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:87feaf8c3ad20d3d03a01933181801ff6892bace5c8f0b1e4b48f319d3e62d36", size = 1387670, upload-time = "2026-04-13T09:52:57.783Z" },
 ]
 
 [[package]]
@@ -1064,21 +907,6 @@ wheels = [
 ]
 
 [[package]]
-name = "nvidia-cusolver"
-version = "12.2.0.11"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "nvidia-cublas", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusparse", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/60/df/9e6b603f1d64040ce3e076e9bce1b78e2d588d0aabc9783f351cecd861ab/nvidia_cusolver-12.2.0.11-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:8be097fca28de6be0990ab216ee9b804dd51077e1d1d83acf6c9850650bdc64d", size = 250383075, upload-time = "2026-07-16T09:50:16.355Z" },
-    { url = "https://files.pythonhosted.org/packages/e4/a4/90f7ade9992190788658c3c285f196fdb9bcc3a5bb93a325c245121d22fd/nvidia_cusolver-12.2.0.11-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:fab5778f6769947389a1a6abc07e635576825a08c0ffc68c3ae7f1392c794b42", size = 227913465, upload-time = "2026-07-16T09:50:56.976Z" },
-    { url = "https://files.pythonhosted.org/packages/02/12/c5c52523ec7970b193837b79f4b892122c24dc5ee5a6b1fae26dae1a31ca/nvidia_cusolver-12.2.0.11-py3-none-win_amd64.whl", hash = "sha256:364511c9974ef1fcde2ca197caebfe0994ece2cb33bc27117eeb88b8cee5c46d", size = 217690140, upload-time = "2026-07-16T10:07:33.457Z" },
-]
-
-[[package]]
 name = "nvidia-cusolver-cu12"
 version = "11.6.1.9"
 source = { registry = "https://pypi.org/simple" }
@@ -1086,9 +914,9 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-cublas-cu12", version = "12.4.5.8", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "nvidia-cusparse-cu12", version = "12.3.1.170", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "nvidia-cublas-cu12", version = "12.4.5.8", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusparse-cu12", version = "12.3.1.170", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/46/6b/a5c33cf16af09166845345275c34ad2190944bcc6026797a39f8e0a282e0/nvidia_cusolver_cu12-11.6.1.9-py3-none-manylinux2014_aarch64.whl", hash = "sha256:d338f155f174f90724bbde3758b7ac375a70ce8e706d70b018dd3375545fc84e", size = 127634111, upload-time = "2024-06-18T19:35:01.793Z" },
@@ -1104,27 +932,14 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "nvidia-cusparse-cu12", version = "12.5.7.53", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-talaia'" },
+    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusparse-cu12", version = "12.5.7.53", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8c/ce/4214a892e804b20bf66d04f04a473006fc2d3dac158160ef85f1bc906639/nvidia_cusolver_cu12-11.7.2.55-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:0fd9e98246f43c15bee5561147ad235dfdf2d037f5d07c9d41af3f7f72feb7cc", size = 260094827, upload-time = "2025-01-23T17:58:17.586Z" },
     { url = "https://files.pythonhosted.org/packages/c2/08/953675873a136d96bb12f93b49ba045d1107bc94d2551c52b12fa6c7dec3/nvidia_cusolver_cu12-11.7.2.55-py3-none-manylinux_2_27_x86_64.whl", hash = "sha256:4d1354102f1e922cee9db51920dba9e2559877cf6ff5ad03a00d853adafb191b", size = 260373342, upload-time = "2025-01-23T17:58:56.406Z" },
     { url = "https://files.pythonhosted.org/packages/c4/f9/e0e6f8b7aecd13e0f9e937d116fb3211329a0a92b9bea9624b1368de307a/nvidia_cusolver_cu12-11.7.2.55-py3-none-win_amd64.whl", hash = "sha256:a5a516c55da5c5aba98420d9bc9bcab18245f21ec87338cc1f930eb18dd411ac", size = 249600787, upload-time = "2025-01-23T18:10:07.641Z" },
-]
-
-[[package]]
-name = "nvidia-cusparse"
-version = "12.7.10.12"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "nvidia-nvjitlink", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/60/35/abbd278fb6d039fcfb5175efa10a21007a11878bec59920d84854b47d766/nvidia_cusparse-12.7.10.12-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:597eff2cd83e3ab1d1e3a0dce9c9c879d77cf64ec2659bfdb5af6a5d02e7aaa9", size = 169043093, upload-time = "2026-07-16T09:51:37.058Z" },
-    { url = "https://files.pythonhosted.org/packages/bc/46/3a9700cc13f30c9279af9a862363535c814fa27597199b21fd93cad66237/nvidia_cusparse-12.7.10.12-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:25907c75e4db1581685f06f61cc6cdecc04611765516a52373e0a18ebd69fa00", size = 150999307, upload-time = "2026-07-16T09:52:17.727Z" },
-    { url = "https://files.pythonhosted.org/packages/2c/28/355676e73dd07d1a41cc33904a8b4fbb22b6fe97662e5ec47c535fe7e9e3/nvidia_cusparse-12.7.10.12-py3-none-win_amd64.whl", hash = "sha256:6b1e82056a0865c5b4f5da6adbebb15244e9a2b8aeea0838a9cf725e16523c53", size = 149276551, upload-time = "2026-07-16T10:08:16.871Z" },
 ]
 
 [[package]]
@@ -1135,7 +950,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/96/a9/c0d2f83a53d40a4a41be14cea6a0bf9e668ffcf8b004bd65633f433050c0/nvidia_cusparse_cu12-12.3.1.170-py3-none-manylinux2014_aarch64.whl", hash = "sha256:9d32f62896231ebe0480efd8a7f702e143c98cfaa0e8a76df3386c1ba2b54df3", size = 207381987, upload-time = "2024-06-18T19:35:32.989Z" },
@@ -1151,7 +966,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-talaia'" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'darwin' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2e/a2/313db0453087f5324a5900380ca2e57e050c8de76f407b5e11383dc762ae/nvidia_cusparse_cu12-12.5.7.53-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:d869c6146ca80f4305b62e02d924b4aaced936f8173e3cef536a67eed2a91af1", size = 291963692, upload-time = "2025-01-23T17:59:40.325Z" },
@@ -1186,16 +1001,6 @@ wheels = [
 ]
 
 [[package]]
-name = "nvidia-cusparselt-cu13"
-version = "0.8.1"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/46/e1/cdc1797eadf82d3a9a575a19b33fdc871a97edbec42c00b5b5e914f4aff4/nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_aarch64.whl", hash = "sha256:4dca476c50bf4780d46cd0bfbd82e2bc10a08e4fef7950917ce8d7578d22a23f", size = 221051344, upload-time = "2025-09-05T18:49:51.289Z" },
-    { url = "https://files.pythonhosted.org/packages/34/7d/2661f2fb3ac4302f3a246f5fc030213ac60c1fe0bce84f9783dbd831dbb7/nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_x86_64.whl", hash = "sha256:786ce87568c303fadb5afcc7102d454cd3040d75f6f8626f5db460d1871f4dd0", size = 170148586, upload-time = "2025-09-05T18:50:50.248Z" },
-    { url = "https://files.pythonhosted.org/packages/31/83/f3647ce26916c94a6ca4ff1810623e2c405cff2dea6e78d29516b2514df9/nvidia_cusparselt_cu13-0.8.1-py3-none-win_amd64.whl", hash = "sha256:dccbd362f91a7b9024d1f55ee9f548ac065027ff15d8c8b0db889ab3a8f31215", size = 156885108, upload-time = "2025-09-05T18:51:35.958Z" },
-]
-
-[[package]]
 name = "nvidia-nccl-cu12"
 version = "2.21.5"
 source = { registry = "https://pypi.org/simple" }
@@ -1216,26 +1021,6 @@ resolution-markers = [
 wheels = [
     { url = "https://files.pythonhosted.org/packages/69/5b/ca2f213f637305633814ae8c36b153220e40a07ea001966dcd87391f3acb/nvidia_nccl_cu12-2.26.2-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:5c196e95e832ad30fbbb50381eb3cbd1fadd5675e587a548563993609af19522", size = 291671495, upload-time = "2025-03-13T00:30:07.805Z" },
     { url = "https://files.pythonhosted.org/packages/67/ca/f42388aed0fddd64ade7493dbba36e1f534d4e6fdbdd355c6a90030ae028/nvidia_nccl_cu12-2.26.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:694cf3879a206553cc9d7dbda76b13efaf610fdb70a50cba303de1b0d1530ac6", size = 201319755, upload-time = "2025-03-13T00:29:55.296Z" },
-]
-
-[[package]]
-name = "nvidia-nccl-cu13"
-version = "2.30.7"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d1/21/a73174c6157101bdf1ffc22b517f76ff0082613989dd9bc8f43e8034caac/nvidia_nccl_cu13-2.30.7-py3-none-manylinux_2_18_aarch64.whl", hash = "sha256:ca786ffa5a647c75d4d1f5cc72a6c4f537947e2ba8823d7c8aaf768e7a7b9f77", size = 215983881, upload-time = "2026-06-09T03:23:15.633Z" },
-    { url = "https://files.pythonhosted.org/packages/3f/34/c500f90c7ae641b8e0f98965b36b8a7ac79cc8b296e8d251fe3eb592ee54/nvidia_nccl_cu13-2.30.7-py3-none-manylinux_2_18_x86_64.whl", hash = "sha256:cefa7fdb9710efd0f39c5f1be1d61ff6fc9a996c451265bd7fbdcf9455ed4b50", size = 215965170, upload-time = "2026-06-09T03:23:39.73Z" },
-]
-
-[[package]]
-name = "nvidia-nvjitlink"
-version = "13.4.92"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1d/6b/eef7a9e32872b8f41e145bf10cddc9af26e153c338852811fe9a9baddf9e/nvidia_nvjitlink-13.4.92-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl", hash = "sha256:e0391f24ed94ec879b84e3da4d4ec320c879aff681f2c7a638462f7199284323", size = 42452378, upload-time = "2026-09-16T20:45:29.042Z" },
-    { url = "https://files.pythonhosted.org/packages/1f/a8/1cbd4014898af8b419e69b0d7dbc63da2121ee92d92b47d59f4fe9075349/nvidia_nvjitlink-13.4.92-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:25f74fad0d654271c921ac4dca614bd6258bc21791242fc7b2289dad7ae9c099", size = 40420120, upload-time = "2026-09-16T20:45:19.163Z" },
-    { url = "https://files.pythonhosted.org/packages/72/7c/c44bd7277afafed9de262a23baec4dc8dcf7ecbb1b9ecb228821442d1e9b/nvidia_nvjitlink-13.4.92-py3-none-win_amd64.whl", hash = "sha256:b286f3a4f227a9363efdec263c7b91788cef1478d2b8a5fa8bab7f3e82ff82fd", size = 39053950, upload-time = "2026-09-16T20:52:54.244Z" },
-    { url = "https://files.pythonhosted.org/packages/3a/8e/afaa7687fac05a507d10765f6097937e99735f835c5b262276d1e2d2cad5/nvidia_nvjitlink-13.4.92-py3-none-win_arm64.whl", hash = "sha256:9e4a7ff4f0cafa8c624917055b863dc11f5c2912ead23c462889e166f3b0e57d", size = 35981621, upload-time = "2026-09-16T20:56:30.819Z" },
 ]
 
 [[package]]
@@ -1262,28 +1047,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/03/f8/9d85593582bd99b8d7c65634d2304780aefade049b2b94d96e44084be90b/nvidia_nvjitlink_cu12-12.8.61-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl", hash = "sha256:45fd79f2ae20bd67e8bc411055939049873bfd8fac70ff13bd4865e0b9bdab17", size = 39243473, upload-time = "2025-01-23T18:03:03.509Z" },
     { url = "https://files.pythonhosted.org/packages/af/53/698f3758f48c5fcb1112721e40cc6714da3980d3c7e93bae5b29dafa9857/nvidia_nvjitlink_cu12-12.8.61-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:9b80ecab31085dda3ce3b41d043be0ec739216c3fc633b8abe212d5a30026df0", size = 38374634, upload-time = "2025-01-23T18:02:35.812Z" },
     { url = "https://files.pythonhosted.org/packages/7f/c6/0d1b2bfeb2ef42c06db0570c4d081e5cde4450b54c09e43165126cfe6ff6/nvidia_nvjitlink_cu12-12.8.61-py3-none-win_amd64.whl", hash = "sha256:1166a964d25fdc0eae497574d38824305195a5283324a21ccb0ce0c802cbf41c", size = 268514099, upload-time = "2025-01-23T18:12:33.874Z" },
-]
-
-[[package]]
-name = "nvidia-nvshmem-cu13"
-version = "3.7.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "nvidia-cuda-cccl", marker = "(sys_platform != 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/81/11/1767ef120299972822a43aceffbc81ac813aad2089d817e36e4e12aa4c9c/nvidia_nvshmem_cu13-3.7.2-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:0e748308b9e0a8a8d81859353f3e6c98fbe85a85f652a915a2ba60149a0bd124", size = 135174619, upload-time = "2026-07-17T19:24:15.404Z" },
-    { url = "https://files.pythonhosted.org/packages/4f/4a/037dfbbafc96ad1828ef62326f27970cae2c0eb271cf5b8e6922f32a7427/nvidia_nvshmem_cu13-3.7.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:b9a4f843c62b5dded8ad33fd6d220e007dcd39f06cee549292f5ba14ce4c235c", size = 135397797, upload-time = "2026-07-17T19:25:26.4Z" },
-]
-
-[[package]]
-name = "nvidia-nvtx"
-version = "13.2.86"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/49/ee/16bde09927e7ffacd50b117cd7d1dc764d145f03249fc41fdf6dfba3301f/nvidia_nvtx-13.2.86-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.whl", hash = "sha256:968ce72baee2a01791c7d3254000eac81f24677b0b91c62d21b449a1f309c245", size = 153463, upload-time = "2026-07-16T09:41:23.242Z" },
-    { url = "https://files.pythonhosted.org/packages/52/5f/74e2d29240de30a971d59ca20f4a3c4f2720cd49752809eeb4177d385c2c/nvidia_nvtx-13.2.86-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:1c6ae1be92fba569dd271f7b9b3056f99f5642726dc6c53d1b93ae4110c398fb", size = 154292, upload-time = "2026-07-16T09:40:53.791Z" },
-    { url = "https://files.pythonhosted.org/packages/df/b3/00239b7a93d2f44dabce1c2b5579d275e83678d6699727ec43de427523ac/nvidia_nvtx-13.2.86-py3-none-win_amd64.whl", hash = "sha256:7f3f430a87bb1e2db3371832d21a5c1efcf77bef7cacfd772fd71649e121cd58", size = 142533, upload-time = "2026-07-16T10:03:02.777Z" },
 ]
 
 [[package]]
@@ -1619,9 +1382,8 @@ dependencies = [
     { name = "lightning-utilities" },
     { name = "packaging" },
     { name = "pyyaml" },
-    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
     { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "torch", version = "2.15.0", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
     { name = "torchmetrics" },
     { name = "tqdm" },
     { name = "typing-extensions" },
@@ -1761,14 +1523,18 @@ dependencies = [
 ]
 
 [package.dev-dependencies]
+artemisa = [
+    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" } },
+    { name = "torchvision", version = "0.21.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" } },
+]
 jlserver = [
     { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" } },
     { name = "torchvision", version = "0.21.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" } },
 ]
 talaia = [
     { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" } },
-    { name = "torchvision", version = "0.22.1", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "torchvision", version = "0.22.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "torchvision", version = "0.22.1", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "torchvision", version = "0.22.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 
 [package.metadata]
@@ -1792,6 +1558,10 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
+artemisa = [
+    { name = "torch", specifier = "==2.6.0", index = "https://download.pytorch.org/whl/cu124", conflict = { package = "super-resolution", group = "artemisa" } },
+    { name = "torchvision", specifier = "==0.21.0", index = "https://download.pytorch.org/whl/cu124", conflict = { package = "super-resolution", group = "artemisa" } },
+]
 jlserver = [
     { name = "torch", specifier = "==2.6.0", index = "https://download.pytorch.org/whl/cu124", conflict = { package = "super-resolution", group = "jlserver" } },
     { name = "torchvision", specifier = "==0.21.0", index = "https://download.pytorch.org/whl/cu124", conflict = { package = "super-resolution", group = "jlserver" } },
@@ -1811,7 +1581,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "mpmath", marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "mpmath", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ca/99/5a5b6f19ff9f083671ddf7b9632028436167cd3d33e11015754e41b249a4/sympy-1.13.1.tar.gz", hash = "sha256:9cebf7e04ff162015ce31c9c6c9144daa34a93bd082f54fd8f12deca4f47515f", size = 7533040, upload-time = "2024-07-19T09:26:51.238Z" }
 wheels = [
@@ -1823,16 +1593,13 @@ name = "sympy"
 version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
-    "sys_platform == 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia'",
-    "sys_platform == 'darwin' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia'",
-    "platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (sys_platform != 'darwin' and sys_platform != 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')",
+    "sys_platform == 'darwin'",
+    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
+    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "mpmath", marker = "extra == 'group-16-super-resolution-talaia' or extra != 'group-16-super-resolution-jlserver'" },
+    { name = "mpmath", marker = "extra == 'group-16-super-resolution-talaia'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/83/d3/803453b36afefb7c2bb238361cd4ae6125a569b4db67cd9e79846ba2d68c/sympy-1.14.0.tar.gz", hash = "sha256:d3d3fe8df1e5a0b42f0e7bdf50541697dbe7d23746e894990c030e2b05e72517", size = 7793921, upload-time = "2025-04-27T18:05:01.611Z" }
 wheels = [
@@ -1911,26 +1678,26 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "filelock", marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "fsspec", marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "jinja2", marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "networkx", marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "nvidia-cublas-cu12", version = "12.4.5.8", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cuda-cupti-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cuda-nvrtc-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cuda-runtime-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cudnn-cu12", version = "9.1.0.70", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cufft-cu12", version = "11.2.1.3", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-curand-cu12", version = "10.3.5.147", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusolver-cu12", version = "11.6.1.9", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusparse-cu12", version = "12.3.1.170", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusparselt-cu12", version = "0.6.2", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nccl-cu12", version = "2.21.5", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvtx-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "sympy", version = "1.13.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "triton", version = "3.2.0", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "typing-extensions", marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "filelock", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "fsspec", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "jinja2", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "networkx", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "nvidia-cublas-cu12", version = "12.4.5.8", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cuda-cupti-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cuda-nvrtc-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cuda-runtime-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cudnn-cu12", version = "9.1.0.70", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cufft-cu12", version = "11.2.1.3", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-curand-cu12", version = "10.3.5.147", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusolver-cu12", version = "11.6.1.9", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusparse-cu12", version = "12.3.1.170", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusparselt-cu12", version = "0.6.2", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nccl-cu12", version = "2.21.5", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nvtx-cu12", version = "12.4.127", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "sympy", version = "1.13.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "triton", version = "3.2.0", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-artemisa') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-jlserver') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "typing-extensions", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
 ]
 wheels = [
     { url = "https://download-r2.pytorch.org/whl/cu124/torch-2.6.0%2Bcu124-cp311-cp311-linux_x86_64.whl", hash = "sha256:d4c3e9a8d31a7c0fcbb9da17c31a1917e1fac26c566a4cfbd8c9568ad7cade79", upload-time = "2025-01-30T00:55:01Z" },
@@ -1952,60 +1719,28 @@ dependencies = [
     { name = "fsspec", marker = "extra == 'group-16-super-resolution-talaia'" },
     { name = "jinja2", marker = "extra == 'group-16-super-resolution-talaia'" },
     { name = "networkx", marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cuda-cupti-cu12", version = "12.8.57", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cuda-nvrtc-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cuda-runtime-cu12", version = "12.8.57", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cudnn-cu12", version = "9.7.1.26", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cufft-cu12", version = "11.3.3.41", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cufile-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-curand-cu12", version = "10.3.9.55", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusolver-cu12", version = "11.7.2.55", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusparse-cu12", version = "12.5.7.53", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusparselt-cu12", version = "0.6.3", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nccl-cu12", version = "2.26.2", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvtx-cu12", version = "12.8.55", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cuda-cupti-cu12", version = "12.8.57", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cuda-nvrtc-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cuda-runtime-cu12", version = "12.8.57", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cudnn-cu12", version = "9.7.1.26", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cufft-cu12", version = "11.3.3.41", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cufile-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-curand-cu12", version = "10.3.9.55", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusolver-cu12", version = "11.7.2.55", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusparse-cu12", version = "12.5.7.53", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-cusparselt-cu12", version = "0.6.3", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nccl-cu12", version = "2.26.2", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "nvidia-nvtx-cu12", version = "12.8.55", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'x86_64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
     { name = "sympy", version = "1.14.0", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "triton", version = "3.3.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "triton", version = "3.3.1", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
     { name = "typing-extensions", marker = "extra == 'group-16-super-resolution-talaia'" },
 ]
 wheels = [
     { url = "https://download-r2.pytorch.org/whl/cu128/torch-2.7.1%2Bcu128-cp311-cp311-manylinux_2_28_aarch64.whl", hash = "sha256:3a0954c54fd7cb9f45beab1272dece2a05b0e77023c1da33ba32a7919661260f", upload-time = "2025-06-03T18:31:04Z" },
     { url = "https://download-r2.pytorch.org/whl/cu128/torch-2.7.1%2Bcu128-cp311-cp311-manylinux_2_28_x86_64.whl", hash = "sha256:c301dc280458afd95450af794924c98fe07522dd148ff384739b810e3e3179f2", upload-time = "2025-06-03T18:31:06Z" },
     { url = "https://download-r2.pytorch.org/whl/cu128/torch-2.7.1%2Bcu128-cp311-cp311-win_amd64.whl", hash = "sha256:138c66dcd0ed2f07aafba3ed8b7958e2bed893694990e0b4b55b6b2b4a336aa6", upload-time = "2025-06-03T18:31:13Z" },
-]
-
-[[package]]
-name = "torch"
-version = "2.15.0"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'darwin'",
-    "platform_machine == 'aarch64' and sys_platform == 'linux'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
-]
-dependencies = [
-    { name = "cuda-bindings", marker = "(sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "cuda-toolkit", extra = ["cublas", "cudart", "cufft", "cufile", "cupti", "cusolver", "cusparse", "nvjitlink", "nvrtc", "nvtx"], marker = "(sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "filelock", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "fsspec", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "jinja2", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "networkx", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cudnn-cu13", marker = "(sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-cusparselt-cu13", marker = "(sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nccl-cu13", marker = "(sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "nvidia-nvshmem-cu13", marker = "(sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "setuptools", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "sympy", version = "1.14.0", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "triton", version = "3.9.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "typing-extensions", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/2d/a5/fa947e2bbb072933f8c0ad5e02bd11126bcfc2b624fe234ac29a7b63600c/torch-2.15.0-cp311-cp311-macosx_14_0_arm64.whl", hash = "sha256:e808b63d616a43b326e1a5677d45a2e5babe7a8ce27edb03ddb48e7dd9b6d663", size = 138527954, upload-time = "2026-10-28T15:16:30.29Z" },
-    { url = "https://files.pythonhosted.org/packages/8c/06/439e6434bef959507463fa3fd21c580304f3798ea06ab3e932ef908cff1d/torch-2.15.0-cp311-cp311-manylinux_2_28_aarch64.whl", hash = "sha256:58ce2ebfb3430941353109a85be63ee8e941da22f13daa2c43344eeb51c81e06", size = 483605887, upload-time = "2026-10-28T15:16:55.208Z" },
-    { url = "https://files.pythonhosted.org/packages/06/7d/57b7f46934e1148b436889e385693bfcb94ae047b3fe0b6015922e3b66f7/torch-2.15.0-cp311-cp311-manylinux_2_28_x86_64.whl", hash = "sha256:48c2d861134c0b5697c7602cb5ffa68f62a2989fdcd1717e593356f67996ca1e", size = 539136850, upload-time = "2026-10-28T15:17:10.346Z" },
-    { url = "https://files.pythonhosted.org/packages/d1/7e/7f1252812e8048bc24f203fc0757a251f26af797b4ff986e19046e2b5f73/torch-2.15.0-cp311-cp311-win_amd64.whl", hash = "sha256:d2c5938f593a47cf6d151a16d130a3cc3f0c105df1b905a571efc00b01e38c1f", size = 126720349, upload-time = "2026-10-28T15:16:25.498Z" },
 ]
 
 [[package]]
@@ -2016,9 +1751,8 @@ dependencies = [
     { name = "lightning-utilities" },
     { name = "numpy" },
     { name = "packaging" },
-    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
     { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "extra == 'group-16-super-resolution-talaia'" },
-    { name = "torch", version = "2.15.0", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/81/34/39b8b749333db56c0585d7a11fa62a283c087bb1dfc897d69fb8cedbefb1/torchmetrics-1.9.0.tar.gz", hash = "sha256:a488609948600df52d3db4fcdab02e62aab2a85ef34da67037dc3e65b8512faa", size = 581765, upload-time = "2026-03-09T17:41:22.443Z" }
 wheels = [
@@ -2035,9 +1769,9 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "numpy", marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "pillow", marker = "extra == 'group-16-super-resolution-jlserver'" },
-    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-jlserver'" },
+    { name = "numpy", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "pillow", marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
 ]
 wheels = [
     { url = "https://download-r2.pytorch.org/whl/cu124/torchvision-0.21.0%2Bcu124-cp311-cp311-linux_x86_64.whl", hash = "sha256:137376805aca5ba57bd2c7a3ecb8569df961dbe82b128aac9b3b0a7125ef9385", upload-time = "2025-01-30T01:04:28Z" },
@@ -2052,9 +1786,9 @@ resolution-markers = [
     "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "numpy", marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "pillow", marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "numpy", marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "pillow", marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_machine != 'aarch64' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://download-r2.pytorch.org/whl/cu128/torchvision-0.22.1-cp311-cp311-manylinux_2_28_aarch64.whl", hash = "sha256:299fbd935f02b424e9166b7689de57067e24a228edc00abd5faf84f86c0643a0", upload-time = "2025-06-03T18:37:29Z" },
@@ -2070,9 +1804,9 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 dependencies = [
-    { name = "numpy", marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "pillow", marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
-    { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "numpy", marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "pillow", marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(platform_machine != 'aarch64' and extra == 'group-16-super-resolution-talaia') or (platform_python_implementation != 'CPython' and extra == 'group-16-super-resolution-talaia') or (sys_platform != 'linux' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://download-r2.pytorch.org/whl/cu128/torchvision-0.22.1%2Bcu128-cp311-cp311-manylinux_2_28_x86_64.whl", hash = "sha256:92568ac46b13a8c88b61589800b1b9c4629be091ea7ce080fc6fc622e11e0915", upload-time = "2025-06-03T18:37:28Z" },
@@ -2080,32 +1814,11 @@ wheels = [
 ]
 
 [[package]]
-name = "torchvision"
-version = "0.29.2"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "sys_platform == 'darwin'",
-    "platform_machine == 'aarch64' and sys_platform == 'linux'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
-]
-dependencies = [
-    { name = "numpy", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "pillow", marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-    { name = "torch", version = "2.15.0", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia') or (extra != 'group-16-super-resolution-jlserver' and extra != 'group-16-super-resolution-talaia')" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/60/ec/ce97c46e5322b588b95be388f2c21878d014ca20838478e7aab59edd128a/torchvision-0.29.2-py3-none-macosx_14_0_arm64.whl", hash = "sha256:d412494ff011f24c884a3cffd33eba1cb45a0299d4e26c1e175113f9d3b3ebc7", size = 1823414, upload-time = "2026-10-28T15:21:31.892Z" },
-    { url = "https://files.pythonhosted.org/packages/30/7a/414f8188d01925491f74d8d125fe00e9c2354b6f0ede21c07737c2619ea4/torchvision-0.29.2-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:a47f8f586df22d9e8e436854f9f613448e36788af8fb2e0eba91516034df2189", size = 7739265, upload-time = "2026-10-28T15:21:33.018Z" },
-    { url = "https://files.pythonhosted.org/packages/92/74/699d28bed7453dbe40b09d37aab8f6cd75f19a77a77d5ab4588a4f3239e7/torchvision-0.29.2-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:0875f7a23bd298813240f716c56df44ce72ddb45146589442a38edd0e1f59637", size = 7585493, upload-time = "2026-10-28T15:21:34.372Z" },
-    { url = "https://files.pythonhosted.org/packages/cf/9a/a728c3af061bff5e0c8a8389b6dfe99646f8290a2f6a5f8fb624a0c15b92/torchvision-0.29.2-py3-none-win_amd64.whl", hash = "sha256:5812c312d4401c3587a045fa4c6228d982ebc4faa9b472275d11afe5852e24f9", size = 1379121, upload-time = "2026-10-28T15:21:30.558Z" },
-]
-
-[[package]]
 name = "tqdm"
 version = "4.70.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
+    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0d/ea/b2a5bd54b28a324dae8211928b2d730b6547500342c7e6c6dea08bd0a485/tqdm-4.70.1.tar.gz", hash = "sha256:cefd0eca11b2a37a3aee776544d4f4ae913f02688135b5556b8788dfa474afc4", size = 171846, upload-time = "2026-09-11T07:25:16.601Z" }
 wheels = [
@@ -2133,25 +1846,10 @@ resolution-markers = [
     "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "setuptools", marker = "extra == 'group-16-super-resolution-talaia'" },
+    { name = "setuptools", marker = "(sys_platform != 'darwin' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-artemisa' and extra == 'group-16-super-resolution-talaia') or (extra == 'group-16-super-resolution-jlserver' and extra == 'group-16-super-resolution-talaia')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/21/2f/3e56ea7b58f80ff68899b1dbe810ff257c9d177d288c6b0f55bf2fe4eb50/triton-3.3.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b31e3aa26f8cb3cc5bf4e187bf737cbacf17311e1112b781d4a059353dfd731b", size = 155689937, upload-time = "2025-05-29T23:39:44.182Z" },
-]
-
-[[package]]
-name = "triton"
-version = "3.9.0"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "platform_machine == 'aarch64' and sys_platform == 'linux'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/4a/0e/a2176f4ddc2a0c77796d7834cd9bb088cdba4d89e080716b36970dce4ad0/triton-3.9.0-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:feaaec13578ca84301d561d034cb08b3ae293d7f0b7ab6b8ddbb2d6796363716", size = 263373771, upload-time = "2026-10-27T18:38:49.077Z" },
-    { url = "https://files.pythonhosted.org/packages/05/73/51e1466f2941ed36dbe57d1f88f772ba6afe669e5ba1e24eaf148b7ec0e1/triton-3.9.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:1622118a038b0c6e16fa4a0305da62c8b3c15904ee1cc4d4e65846a25969e41e", size = 285777556, upload-time = "2026-10-27T18:28:00.919Z" },
-    { url = "https://files.pythonhosted.org/packages/c2/7f/79490a3e16cbda1817f00ad6d05694020f1decb1e063f96e83d1cfd2558d/triton-3.9.0-cp312-abi3-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:5542f4328472fd827dbb1ec43873364c2894682cc3f5d1c74a643762900e243e", size = 263270508, upload-time = "2026-10-27T18:39:01.187Z" },
-    { url = "https://files.pythonhosted.org/packages/3f/c9/af85b25e0d98bd921a7646ad1db1c8746250ee04b8f1595982d29b6283cf/triton-3.9.0-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:5e52ab4e2f1d64f0ac494c9aa723697b793f81a91c4cae4c36608ca0bc4267bf", size = 285674620, upload-time = "2026-10-27T18:28:11.992Z" },
 ]
 
 [[package]]

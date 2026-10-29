@@ -33,6 +33,10 @@ talaia = [
     "torchvision==0.22.1",
 ]
 
+artemisa = [
+    { include-group = "jlserver" },
+]
+
 [tool.uv]
 package = false
 default-groups = ["jlserver"]
@@ -42,6 +46,10 @@ conflicts = [
         { group = "jlserver" },
         { group = "talaia" },
     ],
+    [
+        { group = "artemisa" },
+        { group = "talaia" },
+    ],
 ]
 
 [tool.uv.sources]
@@ -49,11 +57,13 @@ basicsr = { git = "https://github.com/XPixelGroup/BasicSR.git", rev = "8d56e3a04
 
 torch = [
     { index = "pytorch-cu124", group = "jlserver" },
+    { index = "pytorch-cu124", group = "artemisa" },
     { index = "pytorch-cu128", group = "talaia" },
 ]
 
 torchvision = [
     { index = "pytorch-cu124", group = "jlserver" },
+    { index = "pytorch-cu124", group = "artemisa" },
     { index = "pytorch-cu128", group = "talaia" },
 ]
 
