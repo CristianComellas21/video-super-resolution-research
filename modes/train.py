@@ -229,13 +229,13 @@ def train(cfg):
         if cfg.override_hyperparams:
             
             # Load the model from the checkpoint and override the hyperparameters to resume training
-            lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path, model=model, optimizer=optimizer, criterion=criterion, lr_scheduler=scheduler, override_hyperparams=True)
+            lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path, map_location="cpu", model=model, optimizer=optimizer, criterion=criterion, lr_scheduler=scheduler, override_hyperparams=True)
 
         else:
             # Load the model from the checkpoint and keep the hyperparameters from the checkpoint
             log.info(f"Loading model from {check_path}")
             # lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path)    
-            lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path, model=model, optimizer=optimizer, criterion=criterion, lr_scheduler=scheduler)    
+            lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path, map_location="cpu", model=model, optimizer=optimizer, criterion=criterion, lr_scheduler=scheduler)    
     
 
 
