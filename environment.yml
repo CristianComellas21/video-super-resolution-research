@@ -1,25 +1,20 @@
-name: huawei-train
+name: super-resolution
+
 channels:
-  - pytorch
-  - nvidia
   - conda-forge
 
 dependencies:
   - python=3.11
-  - pytorch
-  - torchvision
-  - pytorch-cuda=11.8
-  - numpy
+  - pip
+  - numpy=1.26.4
   - scipy
   - scikit-image
   - pillow
   - matplotlib
   - tqdm
   - pyyaml
-  - pip
-
+  - tensorboard
   - pip:
-      - basicsr
       - opencv-python
       - lmdb
       - einops
@@ -27,4 +22,3 @@ dependencies:
       - torchmetrics
       - hydra-core
       - wandb
-      - tensorboardq
