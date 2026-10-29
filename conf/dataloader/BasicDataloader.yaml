@@ -8,7 +8,7 @@ train:
   _target_: torch.utils.data.DataLoader
   shuffle: True
   batch_size: 16
-  num_workers: 25
+  num_workers: 4
   drop_last: False
   pin_memory: True
 
@@ -16,7 +16,7 @@ val:
   _target_: torch.utils.data.DataLoader
   shuffle: False
   batch_size: 16
-  num_workers: 25
+  num_workers: 4
   drop_last: False
   pin_memory: True
 
