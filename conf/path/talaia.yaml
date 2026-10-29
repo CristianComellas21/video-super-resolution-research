@@ -1,0 +1,3 @@
+checkpoint_dir: /home/bsai010054/phd/super-resolution/code/checkpoints
+data_dir: /home/bsai010054/phd/super-resolution/data/sr/trainsets
+data_test_dir: /home/bsai010054/phd/super-resolution/data/sr/testsets

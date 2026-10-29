@@ -1,0 +1,3 @@
+checkpoint_dir: /lhome/ext/uib153/uib1531/phd/super-resolution/code/checkpoints
+data_dir: /lhome/ext/uib153/uib1531/phd/super-resolution/data/sr/trainsets
+data_test_dir: /lhome/ext/uib153/uib1531/phd/super-resolution/data/sr/testsets
