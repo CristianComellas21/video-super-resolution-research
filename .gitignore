@@ -89,6 +89,12 @@ condor_logs/
 condor_jobs/
 
 # -------------------------
+# Slurm
+# -------------------------
+slurm_logs/
+slurm_jobs/
+
+# -------------------------
 # Custom rules
 # -------------------------
 fast_tests/
