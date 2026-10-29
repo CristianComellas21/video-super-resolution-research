@@ -8,7 +8,7 @@ defaults:
   - optimizer: Adam
   - criterion: L1Loss
   - scheduler: Identity
-  - path: tbserver
+  - path: jlserver
   - litmodule: LitAdvanced
 
 
@@ -19,14 +19,14 @@ checkpoint_mode: null # None | best | last | ema
 override_hyperparams: false
 
 hydra:
-  job:
-    config:
-      override_dirname:
-        exclude_keys:
-          - checkpoint
-          - path
+  # job:
+  #   config:
+  #     override_dirname:
+  #       exclude_keys:
+  #         - checkpoint
+  #         - path
   run:
-    dir: ./logs/${hydra:runtime.choices.experiment}/${hydra:runtime.choices.model}/${now:%Y-%m-%d}/${now:%H-%M-%S}/${hydra.job.override_dirname}
+    dir: ./logs/${hydra:runtime.choices.experiment}/${hydra:runtime.choices.model}/${now:%Y-%m-%d}/${now:%H-%M-%S}
 
   # launcher: 
   #   n_jobs: 8
