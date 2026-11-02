@@ -39,7 +39,7 @@ def _prepare_resume_checkpoint(check_path: Path, reset_model_checkpoint_state: b
     if not reset_model_checkpoint_state:
         return check_path
 
-    checkpoint = torch.load(check_path, map_location="cpu")
+    checkpoint = torch.load(check_path, map_location="cpu", weights_only=False)
     callbacks = checkpoint.get("callbacks", None)
     if not isinstance(callbacks, dict):
         return check_path
