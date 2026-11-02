@@ -3,6 +3,7 @@ from typing import Any, cast
 
 import lightning.pytorch as pl
 from omegaconf import DictConfig, OmegaConf
+from pytorch_lightning import Trainer
 from torch import nn
 import torch
 import tempfile
@@ -21,6 +22,7 @@ import hydra.utils as hy_utils
 from callbacks.ema_checkpoint import EMACheckpointCallback
 
 from pathlib import Path
+from lightning.pytorch.callbacks import TQDMProgressBar
 
 
 log = logging.getLogger(__name__)
@@ -28,6 +30,15 @@ log = logging.getLogger(__name__)
 # Hydra config
 hydra_config = HydraConfig.get()
 
+
+class ResumeTQDMProgressBar(TQDMProgressBar):
+    def on_train_start(self, *_) -> None:
+        super().on_train_start(*_)
+
+        bar = self.train_progress_bar
+
+        if bar.total is None:
+            bar.reset(total=self.total_train_batches)
 
 def _prepare_resume_checkpoint(check_path: Path, reset_model_checkpoint_state: bool) -> Path:
     """Prepare checkpoint used for trainer resume.
@@ -298,6 +309,7 @@ def train(cfg):
     callbacks = [
         checkpoint_callback,
         on_exception_checkpoint_callback,
+        ResumeTQDMProgressBar(),
     ]
 
     if ema_callback is not None:
@@ -317,7 +329,10 @@ def train(cfg):
     #     **trainer_cfg,
     # )
 
-
+    print("Dataset samples:", len(dataset))
+    print("Dataloader batches:", len(train_dataloader))
+    print("Max epochs:", trainer.max_epochs)
+    print("Max steps:", trainer.max_steps)
 
     # Train the model
     trainer.fit(model=lightning_model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=resume_check_path, weights_only=False)
