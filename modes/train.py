@@ -320,7 +320,7 @@ def train(cfg):
 
 
     # Train the model
-    trainer.fit(model=lightning_model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=resume_check_path)
+    trainer.fit(model=lightning_model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=resume_check_path, weights_only=False)
     trainer.save_checkpoint(checkpoints_path / Path("stopped.ckpt"))
     
     log.info("Training finished!")
