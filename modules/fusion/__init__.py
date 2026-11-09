@@ -1,5 +1,5 @@
 from .base import BaseFusion
-from .convolution import WarpConcatFusion, FlowGuidedDeformableUnetFusion, FlowGuidedDeformableConcatFusion, FlowGuidedDeformableDeepConcatFusion, FlowGuidedDeformableAttentionFusion, FlowGuidedDeformableTransformerFusion, FlowGuidedDeformableConcatNAFFusion, WarpConcatNAFFusion
+from .convolution import WarpConcatFusion, FlowGuidedDeformableUnetFusion, FlowGuidedDeformableConcatFusion, FlowGuidedDeformableDeepConcatFusion, FlowGuidedDeformableAttentionFusion, FlowGuidedDeformableTransformerFusion, FlowGuidedDeformableConcatNAFFusion, WarpConcatNAFFusion, FlowGuidedDeformableLocalAttentionFusion
 from .edge import WarpConcatEdgeFusion
 from .gated import WarpGatedFusion
 from .attention import WarpLocalDenseAttentionChunkedFusion, WarpPatchDenseAttentionChunkedFusion, WarpLocalTopKThenDenseAttentionChunkedFusion, WarpLocalTopKThenFullAttentionChunkedFusion, FlowGuidedLocalDenseAttentionChunkedFusion
@@ -23,5 +23,6 @@ __all__ = [
     'FlowGuidedDeformableAttentionFusion',
     'FlowGuidedDeformableTransformerFusion',
     'WarpConcatNAFFusion',
+    'FlowGuidedDeformableLocalAttentionFusion',
     'FlowGuidedDeformableUnetFusion',
 ]
