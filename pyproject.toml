@@ -20,6 +20,7 @@ dependencies = [
     "wandb",
     "tensorboard",
     "basicsr==1.4.2",
+    "pandas>=3.0.6",
 ]
 
 [dependency-groups]
