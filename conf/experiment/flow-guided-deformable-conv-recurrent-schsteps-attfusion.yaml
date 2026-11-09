@@ -21,6 +21,7 @@ model:
     use_residual_offsets: true
     offset_hidden_ch: 64
     use_final_residual: true
+    distance_metric: dot
 
 ema:
   enabled: true

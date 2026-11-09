@@ -326,7 +326,11 @@ class FlowGuidedDeformableAttentionFusion(BaseFusion):
       cur  -> regular conv
       nxt  -> DCN guided by flow_cur_to_next
 
-    Then concatenate and fuse with attention.
+    The three aligned branches are fused using temporal attention.
+
+    Supported similarity metrics:
+        - dot: scaled dot-product similarity
+        - l2: negative squared Euclidean distance
     """
 
     def __init__(
@@ -337,6 +341,7 @@ class FlowGuidedDeformableAttentionFusion(BaseFusion):
         use_residual_offsets: bool = True,
         offset_hidden_ch: int = 64,
         use_final_residual: bool = True,
+        distance_metric: str = "dot", # "dot" or "l2"
     ):
         super().__init__(feat_ch=feat_ch)
 
@@ -376,11 +381,21 @@ class FlowGuidedDeformableAttentionFusion(BaseFusion):
             nn.init.zeros_(self.next_offset_net[-1].weight)
             nn.init.zeros_(self.next_offset_net[-1].bias)
 
-        self.fuse = TemporalSourceAttentionFuse(
-            feat_ch=feat_ch,
-            attn_ch=feat_ch // 2,
-            use_residual_value=True,
-        )
+        if distance_metric == "dot":
+            self.fuse = TemporalSourceAttentionFuse(
+                feat_ch=feat_ch,
+                attn_ch=feat_ch // 2,
+                use_residual_value=True,
+            )
+        elif distance_metric == "l2":
+            self.fuse = TemporalSourceL2AttentionFuse(
+                feat_ch=feat_ch,
+                attn_ch=feat_ch // 2,
+                use_residual_value=True,
+            )
+        else:
+            raise ValueError(f"Unknown distance metric: {distance_metric}")
+
         self.act = nn.LeakyReLU(0.1, inplace=True)
         self.blocks = nn.Sequential(*[ResBlock(feat_ch) for _ in range(num_blocks)])
 
@@ -507,6 +522,154 @@ class TemporalSourceAttentionFuse(nn.Module):
             return fused, attn
 
         return fused
+
+class TemporalSourceL2AttentionFuse(nn.Module):
+    """
+    L2-based attention over already aligned temporal sources:
+        [prev_f, cur_f, next_f]
+
+    For each spatial position:
+        query = embedding(cur_f)
+
+        candidates:
+            embedding(prev_f)
+            embedding(cur_f)
+            embedding(next_f)
+
+        score_i = - ||q - k_i||² / temperature
+
+    This is analogous to a learned feature-space Non-Local Means
+    operating across the three aligned temporal sources.
+    """
+
+    def __init__(
+        self,
+        feat_ch: int,
+        attn_ch: int | None = None,
+        init_temperature: float = 1.0,
+        learnable_temperature: bool = True,
+        use_residual_value: bool = True,
+    ):
+        super().__init__()
+
+        attn_ch = attn_ch or feat_ch
+
+        self.feat_ch = feat_ch
+        self.attn_ch = attn_ch
+        self.use_residual_value = use_residual_value
+
+        # Shared embedding for query and keys.
+        # Important for an actual metric interpretation.
+        self.embed = nn.Conv2d(
+            feat_ch,
+            attn_ch,
+            kernel_size=1,
+        )
+
+        self.v = nn.Conv2d(
+            feat_ch,
+            attn_ch,
+            kernel_size=1,
+        )
+
+        self.proj = nn.Conv2d(
+            attn_ch,
+            feat_ch,
+            kernel_size=1,
+        )
+
+        log_temp = torch.tensor(float(init_temperature)).log()
+
+        if learnable_temperature:
+            self.log_temperature = nn.Parameter(log_temp)
+        else:
+            self.register_buffer(
+                "log_temperature",
+                log_temp,
+            )
+
+    def forward(
+        self,
+        prev_f,
+        cur_f,
+        next_f,
+        return_attn: bool = False,
+    ):
+        B, C, H, W = cur_f.shape
+
+        sources = torch.stack(
+            [prev_f, cur_f, next_f],
+            dim=1,
+        )
+        # B, 3, C, H, W
+
+        sources_flat = sources.reshape(
+            B * 3,
+            C,
+            H,
+            W,
+        )
+
+        # ---------------------------------------------------------
+        # Metric embedding
+        # ---------------------------------------------------------
+
+        q = self.embed(cur_f)
+        # B, A, H, W
+
+        k = self.embed(sources_flat).view(
+            B,
+            3,
+            self.attn_ch,
+            H,
+            W,
+        )
+
+        # ---------------------------------------------------------
+        # Squared L2 distance
+        # ---------------------------------------------------------
+
+        dist2 = (
+            q.unsqueeze(1) - k
+        ).square().mean(dim=2)
+
+        # B, 3, H, W
+
+        temperature = self.log_temperature.exp().clamp_min(1e-6)
+
+        scores = -dist2 / temperature
+
+        attn = torch.softmax(
+            scores,
+            dim=1,
+        )
+
+        # ---------------------------------------------------------
+        # Values
+        # ---------------------------------------------------------
+
+        v = self.v(sources_flat).view(
+            B,
+            3,
+            self.attn_ch,
+            H,
+            W,
+        )
+
+        fused = (
+            attn.unsqueeze(2) * v
+        ).sum(dim=1)
+
+        fused = self.proj(fused)
+
+        if self.use_residual_value:
+            fused = fused + cur_f
+
+        if return_attn:
+            return fused, attn
+
+        return fused
+
         
 ###########################################################################
 ###### NEW TRANSFORMER-BASED FUSION (with optional learned offsets) ######
