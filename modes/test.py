@@ -197,6 +197,9 @@ def test(cfg):
             log.error("No checkpoint found!")
             lightning_model = hy_utils.instantiate(cfg.litmodule, **params_to_override)
             
+    # Do not serialize checkpoint hyperparameters into TensorBoard hparams.yaml.
+    # Some checkpoints contain nn.Module objects in hyper_parameters.
+    lightning_model._log_hyperparams = False
 
     lightning_model.eval()
 
