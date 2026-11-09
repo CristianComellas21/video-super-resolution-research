@@ -134,6 +134,7 @@ def test(cfg):
         lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(
                 checkpoint_path=checkpoint,
                 map_location="cpu",
+                weights_only=False,
                 **params_to_override
                 )
     
@@ -168,7 +169,7 @@ def test(cfg):
                 
                 if cfg.model._target_ == "models.DCT2Net.Model":
                     # Get the state dict
-                    state_dict = torch.load(cfg.state_dict, map_location="cpu")
+                    state_dict = torch.load(cfg.state_dict, map_location="cpu", weights_only=False)
                     
                     # Load the Pm1 parameter into the model
                     lightning_model.model.Pm1.data = state_dict.view(cfg.model.patch_size**2, cfg.model.patch_size**2)
@@ -179,7 +180,7 @@ def test(cfg):
                     log.info(f"Loading state dict from {cfg.state_dict}...")
                     
                     # Load the state dict
-                    state_dict = torch.load(cfg.state_dict, map_location="cpu")
+                    state_dict = torch.load(cfg.state_dict, map_location="cpu", weights_only=False)
                     
                     if isinstance(state_dict, dict):
                         lightning_model.model.load_state_dict(state_dict, strict=False)
@@ -201,7 +202,7 @@ def test(cfg):
 
     
     # Test the model
-    metrics = trainer.test(model=lightning_model, dataloaders=test_dataloader, ckpt_path=checkpoint)
+    metrics = trainer.test(model=lightning_model, dataloaders=test_dataloader, ckpt_path=checkpoint, weights_only=False)
     
     # Create trainig path if it does not exist
     training_path.mkdir(parents=True, exist_ok=True)
