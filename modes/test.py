@@ -211,7 +211,9 @@ def test(cfg):
     training_path.mkdir(parents=True, exist_ok=True)
     
     # Save metrics
-    dataset_name = dataset.name if hasattr(dataset, "name") else hydra_config.runtime.choices.dataset
+    has_name = "name" in dir(type(dataset))
+
+    dataset_name = dataset.name if has_name else hydra_config.runtime.choices.dataset
     metrics_name = f"test_metrics_{dataset_name}.csv"
     
     # If the full test metrics are not available, save the metrics from the test method

@@ -132,6 +132,7 @@ class Dataset(data.Dataset):
         **kwargs,
     ):
         super(Dataset, self).__init__()
+        self.dataname = dataname
         self.gt_root = Path(dataroot_gt)
         self.lq_root = Path(dataroot_lq)
         self.seq_len = int(seq_len)
@@ -475,6 +476,10 @@ class Dataset(data.Dataset):
 
     def __len__(self):
         return len(self.samples)
+    
+    @property
+    def name(self):
+        return f"DatasetVideoRecurrent_{self.dataname}_seq{self.seq_len}_stride{self.stride}"
 
     def get_images_names(self):
         names = []
