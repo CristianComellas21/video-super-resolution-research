@@ -409,7 +409,7 @@ class TemporalSourceL2AttentionFuse(nn.Module):
             embedding(cur_f)
             embedding(next_f)
 
-        score_i = - ||q - k_i||² / temperature
+        score_i = - ||q - k_i||^2 / temperature
 
     This is analogous to a learned feature-space Non-Local Means
     operating across the three aligned temporal sources.
@@ -419,11 +419,22 @@ class TemporalSourceL2AttentionFuse(nn.Module):
         self,
         feat_ch: int,
         attn_ch: int | None = None,
+        search_window: int = 1,
+        include_current: bool = True,
         init_temperature: float = 1.0,
         learnable_temperature: bool = True,
         use_residual_value: bool = True,
     ):
         super().__init__()
+        
+        if search_window < 1 or search_window % 2 != 1:
+            raise ValueError(
+                f"search_window debe ser impar y >= 1, recibido: {search_window}"
+            )
+
+        self.search_window = int(search_window)
+        self.search_pad = self.search_window // 2
+        self.include_current = bool(include_current)
 
         attn_ch = attn_ch or feat_ch
 
@@ -468,47 +479,161 @@ class TemporalSourceL2AttentionFuse(nn.Module):
         next_f,
         return_attn: bool = False,
     ):
-        B, C, H, W = cur_f.shape
-
-        sources = torch.stack(
-            [prev_f, cur_f, next_f],
-            dim=1,
-        )
-        # B, 3, C, H, W
-
-        sources_flat = sources.reshape(
-            B * 3,
-            C,
-            H,
-            W,
-        )
+        B, _, H, W = cur_f.shape
 
         # ---------------------------------------------------------
-        # Metric embedding
+        # Metric embeddings
         # ---------------------------------------------------------
 
         q = self.embed(cur_f)
-        # B, A, H, W
+        # (B, A, H, W)
 
-        k = self.embed(sources_flat).view(
-            B,
-            3,
-            self.attn_ch,
-            H,
-            W,
+        k_prev = self.embed(prev_f)
+        k_next = self.embed(next_f)
+
+        v_prev = self.v(prev_f)
+        v_next = self.v(next_f)
+
+        # ---------------------------------------------------------
+        # Extract local search windows
+        # ---------------------------------------------------------
+
+        # F.unfold:
+        # (B, A * win^2, H*W)
+
+        k_prev = F.unfold(
+            k_prev,
+            kernel_size=self.search_window,
+            padding=self.search_pad,
         )
+
+        k_next = F.unfold(
+            k_next,
+            kernel_size=self.search_window,
+            padding=self.search_pad,
+        )
+
+        v_prev = F.unfold(
+            v_prev,
+            kernel_size=self.search_window,
+            padding=self.search_pad,
+        )
+
+        v_next = F.unfold(
+            v_next,
+            kernel_size=self.search_window,
+            padding=self.search_pad,
+        )
+
+        win2 = self.search_window * self.search_window
+        L = H * W
+
+        # ---------------------------------------------------------
+        # Reshape candidates
+        # ---------------------------------------------------------
+
+
+        # (B, A*win^2, L)
+        # ->
+        # (B, win^2, A, L)
+
+        k_prev = k_prev.view(
+            B,
+            self.attn_ch,
+            win2,
+            L,
+        ).permute(0, 2, 1, 3)
+
+        k_next = k_next.view(
+            B,
+            self.attn_ch,
+            win2,
+            L,
+        ).permute(0, 2, 1, 3)
+
+        v_prev = v_prev.view(
+            B,
+            self.attn_ch,
+            win2,
+            L,
+        ).permute(0, 2, 1, 3)
+
+        v_next = v_next.view(
+            B,
+            self.attn_ch,
+            win2,
+            L,
+        ).permute(0, 2, 1, 3)
+
+        # ---------------------------------------------------------
+        # Query
+        # ---------------------------------------------------------
+
+        q = q.view(
+            B,
+            self.attn_ch,
+            L,
+        ).unsqueeze(1)
+
+        # q:
+        # (B, 1, A, L)
+
+        # ---------------------------------------------------------
+        # Candidate pool
+        # ---------------------------------------------------------
+
+        keys = [
+            k_prev,
+            k_next,
+        ]
+
+        values = [
+            v_prev,
+            v_next,
+        ]
+
+        if self.include_current:
+            k_cur = self.embed(cur_f).view(
+                B,
+                1,
+                self.attn_ch,
+                L,
+            )
+
+            v_cur = self.v(cur_f).view(
+                B,
+                1,
+                self.attn_ch,
+                L,
+            )
+
+            keys.insert(1, k_cur)
+            values.insert(1, v_cur)
+
+        keys = torch.cat(keys, dim=1)
+        values = torch.cat(values, dim=1)
+
+        # Without current:
+        #   (B, 2*win^2, A, L)
+        #
+        # With current:
+        #   (B, 2*win^2 + 1, A, L)
 
         # ---------------------------------------------------------
         # Squared L2 distance
         # ---------------------------------------------------------
 
         dist2 = (
-            q.unsqueeze(1) - k
+            q - keys
         ).square().mean(dim=2)
 
-        # B, 3, H, W
+        # (B, candidates, L)
 
-        temperature = self.log_temperature.exp().clamp_min(1e-6)
+        temperature = (
+            self.log_temperature
+            .exp()
+            .clamp_min(1e-6)
+        )
 
         scores = -dist2 / temperature
 
@@ -518,20 +643,21 @@ class TemporalSourceL2AttentionFuse(nn.Module):
         )
 
         # ---------------------------------------------------------
-        # Values
+        # Weighted aggregation
         # ---------------------------------------------------------
 
-        v = self.v(sources_flat).view(
+        fused = (
+            attn.unsqueeze(2) * values
+        ).sum(dim=1)
+
+        # (B, A, L)
+
+        fused = fused.view(
             B,
-            3,
             self.attn_ch,
             H,
             W,
         )
-
-        fused = (
-            attn.unsqueeze(2) * v
-        ).sum(dim=1)
 
         fused = self.proj(fused)
 
@@ -542,6 +668,88 @@ class TemporalSourceL2AttentionFuse(nn.Module):
             return fused, attn
 
         return fused
+
+    # def forward(
+    #     self,
+    #     prev_f,
+    #     cur_f,
+    #     next_f,
+    #     return_attn: bool = False,
+    # ):
+    #     B, C, H, W = cur_f.shape
+
+    #     sources = torch.stack(
+    #         [prev_f, cur_f, next_f],
+    #         dim=1,
+    #     )
+    #     # B, 3, C, H, W
+
+    #     sources_flat = sources.reshape(
+    #         B * 3,
+    #         C,
+    #         H,
+    #         W,
+    #     )
+
+    #     # ---------------------------------------------------------
+    #     # Metric embedding
+    #     # ---------------------------------------------------------
+
+    #     q = self.embed(cur_f)
+    #     # B, A, H, W
+
+    #     k = self.embed(sources_flat).view(
+    #         B,
+    #         3,
+    #         self.attn_ch,
+    #         H,
+    #         W,
+    #     )
+
+    #     # ---------------------------------------------------------
+    #     # Squared L2 distance
+    #     # ---------------------------------------------------------
+
+    #     dist2 = (
+    #         q.unsqueeze(1) - k
+    #     ).square().mean(dim=2)
+
+    #     # B, 3, H, W
+
+    #     temperature = self.log_temperature.exp().clamp_min(1e-6)
+
+    #     scores = -dist2 / temperature
+
+    #     attn = torch.softmax(
+    #         scores,
+    #         dim=1,
+    #     )
+
+    #     # ---------------------------------------------------------
+    #     # Values
+    #     # ---------------------------------------------------------
+
+    #     v = self.v(sources_flat).view(
+    #         B,
+    #         3,
+    #         self.attn_ch,
+    #         H,
+    #         W,
+    #     )
+
+    #     fused = (
+    #         attn.unsqueeze(2) * v
+    #     ).sum(dim=1)
+
+    #     fused = self.proj(fused)
+
+    #     if self.use_residual_value:
+    #         fused = fused + cur_f
+
+    #     if return_attn:
+    #         return fused, attn
+
+    #     return fused
     
    
 class FlowGuidedDeformableAttentionFusion(BaseFusion):

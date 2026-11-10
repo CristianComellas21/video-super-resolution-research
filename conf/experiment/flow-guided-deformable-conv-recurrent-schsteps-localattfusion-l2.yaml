@@ -29,8 +29,12 @@ model:
       chunk_size: 1024
 
       distance_metric: l2
+      search_window: 1
+      include_current: true
       init_temperature: 1.0
       learnable_temperature: true
+
+
 
 ema:
   enabled: true
