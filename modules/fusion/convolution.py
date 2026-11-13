@@ -781,7 +781,13 @@ class FlowGuidedDeformableAttentionFusion(BaseFusion):
         use_residual_offsets: bool = True,
         offset_hidden_ch: int = 64,
         use_final_residual: bool = True,
-        distance_metric: str = "dot", # "dot" or "l2"
+        distance_metric: str = "dot",
+
+        # L2-specific options
+        search_window: int = 1,
+        include_current: bool = True,
+        init_temperature: float = 1.0,
+        learnable_temperature: bool = True,
     ):
         super().__init__(feat_ch=feat_ch)
 
@@ -831,6 +837,10 @@ class FlowGuidedDeformableAttentionFusion(BaseFusion):
             self.fuse = TemporalSourceL2AttentionFuse(
                 feat_ch=feat_ch,
                 attn_ch=feat_ch // 2,
+                search_window=search_window,
+                include_current=include_current,
+                init_temperature=init_temperature,
+                learnable_temperature=learnable_temperature,
                 use_residual_value=True,
             )
         else:
