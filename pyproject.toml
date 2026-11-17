@@ -22,6 +22,7 @@ dependencies = [
     "basicsr==1.4.2",
     "pandas>=3.0.6",
     "timm>=1.0.31",
+    "ptflops>=0.7.5",
 ]
 
 [dependency-groups]

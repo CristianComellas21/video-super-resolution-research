@@ -1391,6 +1391,19 @@ wheels = [
 ]
 
 [[package]]
+name = "ptflops"
+version = "0.7.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "torch", version = "2.6.0+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'group-16-super-resolution-artemisa' or extra == 'group-16-super-resolution-jlserver' or extra != 'group-16-super-resolution-talaia'" },
+    { name = "torch", version = "2.7.1+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "extra == 'group-16-super-resolution-talaia'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/05/dc/e679036cc222a9995e37754aefeee4a2b6e92d1b4956bee27b48182efec2/ptflops-0.7.5.tar.gz", hash = "sha256:84e437a3ccad1bb050c14c599a76555b345533287767da87758e38c9101a40a7", size = 18949, upload-time = "2025-08-20T17:17:47.838Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/11/66/3eea7b5f6cc3f6ae7acb125ef82c083d9bb759c7e43fd333cb39eb1e1cfe/ptflops-0.7.5-py3-none-any.whl", hash = "sha256:c47543d5209a21e0805b39a50d452c8f8f6f5b648684777490db6f9459bdda07", size = 19500, upload-time = "2025-08-20T17:17:46.402Z" },
+]
+
+[[package]]
 name = "pydantic"
 version = "2.14.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1630,6 +1643,7 @@ dependencies = [
     { name = "opencv-python" },
     { name = "pandas" },
     { name = "pillow" },
+    { name = "ptflops" },
     { name = "pyyaml" },
     { name = "scikit-image" },
     { name = "scipy" },
@@ -1667,6 +1681,7 @@ requires-dist = [
     { name = "opencv-python" },
     { name = "pandas", specifier = ">=3.0.6" },
     { name = "pillow" },
+    { name = "ptflops", specifier = ">=0.7.5" },
     { name = "pyyaml" },
     { name = "scikit-image" },
     { name = "scipy" },
