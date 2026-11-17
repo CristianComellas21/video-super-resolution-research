@@ -1,0 +1,4 @@
+# @package _global_
+hydra:
+  run:
+    dir: ./logs/debug/${hydra:runtime.choices.model}/
