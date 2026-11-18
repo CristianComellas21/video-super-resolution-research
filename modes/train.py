@@ -161,8 +161,14 @@ def train(cfg):
 
     # Checkpoint callbacks
     checkpoints_path = dir_to_save / Path("checkpoints")
-    checkpoint_callback = ModelCheckpoint(dirpath=checkpoints_path, save_top_k=5, monitor="val/psnr", save_last=True, mode="max", filename="{epoch:05d}-{val_psnr:.4f}",)
-
+    checkpoint_callback = ModelCheckpoint(
+        dirpath=checkpoints_path,
+        save_top_k=5,
+        monitor="val/psnr",
+        save_last=True,
+        mode="max",
+        filename="{step:08d}-{val_psnr:.4f}",
+    )
     on_exception_filename = "on_exception"
     on_exception_checkpoint_callback = OnExceptionCheckpoint(dirpath=checkpoints_path, filename=on_exception_filename)
 
@@ -180,74 +186,102 @@ def train(cfg):
 
 
     # Load pretrained model path if it exists, otherwise train from scratch
-    check_path = cfg.get("checkpoint", None)
     
-    if check_path is not None:
-        check_path = Path(check_path)
-        log.info(f"Loading model from {check_path}")
-        
-        if not check_path.exists():
-            log.info(f"Checkpoint path {check_path} does not exist. Training from scratch.")
-            check_path = None
-        elif check_path.is_dir():
-            try:
-                check_path = next(check_path.rglob("last*.ckpt"))
-            except StopIteration:
-                try:
-                    check_path = next(check_path.rglob("best*.ckpt"))
-                except StopIteration:
-                    check_path = None
-                    log.info(f"Checkpoint path {check_path} is a directory and does not contain the required .ckpt file. Training from scratch.")
-                
-        elif check_path.suffix != ".ckpt":
-            log.info(f"Checkpoint path {check_path} is not a .ckpt file. Training from scratch.")
-            check_path = None
+    # Resolve checkpoint and loading mode.
+    checkpoint_load_mode = cfg.get("checkpoint_load_mode", None)
+    checkpoint_path = cfg.get("checkpoint", None)
 
-    resume_check_path = None
-    if check_path is not None:
-        reset_best_on_resume = cfg.get("reset_best_on_resume", True)
-        resume_check_path = _prepare_resume_checkpoint(
-            check_path,
-            reset_model_checkpoint_state=reset_best_on_resume,
+    if checkpoint_load_mode not in (None, "resume", "finetune"):
+        raise ValueError(
+            f"Unknown checkpoint mode: {checkpoint_load_mode}"
         )
-        if resume_check_path != check_path:
-            log.info("ModelCheckpoint state reset for resumed run (best metric/path starts fresh).")
+
+    if checkpoint_load_mode is None:
+        if checkpoint_path is not None:
+            raise ValueError(
+                "A checkpoint was provided without checkpoint_load_mode."
+            )
+        check_path = None
+
+    else:
+        if checkpoint_path is None:
+            raise ValueError(
+                f"checkpoint_load_mode='{checkpoint_load_mode}' requires a checkpoint."
+            )
+
+        check_path = Path(checkpoint_path)
+
+        # Allow a directory or a direct .ckpt path.
+        if check_path.is_dir():
+            candidates = sorted(check_path.rglob("last.ckpt"))
+
+            if not candidates:
+                raise FileNotFoundError(
+                    f"No last.ckpt found in {check_path}"
+                )
+
+            if len(candidates) > 1:
+                raise ValueError(
+                    f"Multiple last.ckpt files found in {check_path}. "
+                    "Specify the checkpoint file explicitly."
+                )
+
+            check_path = candidates[0]
+
+        if not check_path.is_file() or check_path.suffix != ".ckpt":
+            raise FileNotFoundError(
+                f"Invalid checkpoint: {check_path}"
+            )
+
+        log.info(
+            f"Checkpoint mode: {checkpoint_load_mode}, path: {check_path}"
+        )
+
+
     
+    # Instantiate LightningModule.
+    lightning_model = hy_utils.instantiate(
+        cfg.litmodule,
+        model=model,
+        optimizer=optimizer,
+        criterion=criterion,
+        lr_scheduler=scheduler,
+    )
 
-    # # TODO: remove this patch
-    # # Change some keys of the state_dict to match the new model
-    # # I have to change *L2AttentionHead* to *attention*
-    # check = torch.load(check_path)
-    # state_dict = check["state_dict"]
-    # state_dict = {k.replace("L2AttentionHead", "attention") if "L2AttentionHead" in k else k: v for k, v in state_dict.items()}
-    # check["state_dict"] = state_dict
-    # tmp_file_path = checkpoints_path / Path("tmp.ckpt")
-    # torch.save(check, tmp_file_path)
-    # # model.load_state_dict(state_dict)
+    fit_ckpt_path = None
 
-    
-    ### ======================= ###
-    ### --- LITMODULE SETUP --- ###
-    ### ======================= ###
+    if checkpoint_load_mode == "resume":
+        assert check_path is not None
 
+        fit_ckpt_path = _prepare_resume_checkpoint(
+            check_path,
+            reset_model_checkpoint_state=cfg.get(
+                "reset_best_on_resume", False
+            ),
+        )
 
-    if check_path is None:    
-        # Load the model from scratch
+        log.info(f"Resuming training from {fit_ckpt_path}")
+
+    elif checkpoint_load_mode == "finetune":
+        assert check_path is not None
+
+        checkpoint = torch.load(
+            check_path,
+            map_location="cpu",
+            weights_only=False,
+        )
+
+        lightning_model.load_state_dict(
+            checkpoint["state_dict"],
+            strict=True,
+        )
+
+        log.info(f"Fine-tuning from {check_path}")
+
+    else:
         log.info("Training from scratch")
-        lightning_model = hy_utils.instantiate(cfg.litmodule, model=model, optimizer=optimizer, criterion=criterion, lr_scheduler=scheduler)
-    
-    else: 
-        if cfg.override_hyperparams:
-            
-            # Load the model from the checkpoint and override the hyperparameters to resume training
-            lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path, map_location="cpu", model=model, optimizer=optimizer, criterion=criterion, lr_scheduler=scheduler, override_hyperparams=True, weights_only=False)
 
-        else:
-            # Load the model from the checkpoint and keep the hyperparameters from the checkpoint
-            log.info(f"Loading model from {check_path}")
-            # lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path)    
-            lightning_model = hy_utils.get_class(cfg.litmodule._target_).load_from_checkpoint(check_path, map_location="cpu", model=model, optimizer=optimizer, criterion=criterion, lr_scheduler=scheduler, weights_only=False)    
-    
+
 
 
     # Define trainer
@@ -335,24 +369,35 @@ def train(cfg):
     print("Max steps:", trainer.max_steps)
 
     # Train the model
-    trainer.fit(model=lightning_model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=resume_check_path, weights_only=False)
-    trainer.save_checkpoint(checkpoints_path / Path("stopped.ckpt"))
-    
+    trainer.fit(
+        model=lightning_model,
+        train_dataloaders=train_dataloader,
+        val_dataloaders=val_dataloader,
+        ckpt_path=fit_ckpt_path,
+    )    
+    trainer.save_checkpoint(checkpoints_path / Path("stopped.ckpt"))    
     log.info("Training finished!")
     
     
     # Get the best model path
     best_model_path = checkpoint_callback.best_model_path if checkpoint_callback.best_model_path != "" else on_exception_checkpoint_callback.ckpt_path
 
-    # Get epoch of the best model
-    best_model_path = Path(best_model_path)
-    best_model_epoch = _extract_epoch_from_checkpoint(best_model_path, on_exception_filename)
     
+    # Duplicate the best model to a new file.
+    if not best_model_path:
+        raise RuntimeError("No best checkpoint was produced.")
 
-    # Duplicate the best model to a new file
     best_model_path = Path(best_model_path)
-    new_best_model_path = checkpoints_path / Path(f"best-epoch={best_model_epoch}.ckpt")
-    shutil.copy2(best_model_path, new_best_model_path)
+
+    if not best_model_path.is_file():
+        raise FileNotFoundError(
+            f"Best checkpoint not found: {best_model_path}"
+        )
+
+    new_best_model_path = checkpoints_path / "best.ckpt"
+
+    if best_model_path.resolve() != new_best_model_path.resolve():
+        shutil.copy2(best_model_path, new_best_model_path)
     
     # Print the best model path
     log.info(f"Best model saved at {new_best_model_path}")

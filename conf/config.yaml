@@ -15,6 +15,7 @@ defaults:
 checkpoint: ???
 
 checkpoint_mode: null # None | best | last | ema
+checkpoint_load_mode: null # null (None) | resume | finetune
 
 override_hyperparams: false
 

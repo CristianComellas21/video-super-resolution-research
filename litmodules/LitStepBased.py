@@ -81,11 +81,11 @@ class LitModule(pl.LightningModule):
             },
         }
 
-    def on_load_checkpoint(self, checkpoint: dict) -> None:
-        if getattr(self.hparams, "override_hyperparams", False):
-            # Strip the optimizer and scheduler states to override hyperparameters.
-            checkpoint["optimizer_states"] = []
-            checkpoint["lr_schedulers"] = []
+    # def on_load_checkpoint(self, checkpoint: dict) -> None:
+    #     if getattr(self.hparams, "override_hyperparams", False):
+    #         # Strip the optimizer and scheduler states to override hyperparameters.
+    #         checkpoint["optimizer_states"] = []
+    #         checkpoint["lr_schedulers"] = []
 
     def on_train_start(self) -> None:
         """Debug helper: print modules that are not in training mode and frozen params."""
