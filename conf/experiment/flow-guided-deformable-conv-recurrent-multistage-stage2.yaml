@@ -1,0 +1,53 @@
+# @package _global_
+
+defaults:
+  - override /scheduler: CosineAnnealingLRSteps
+  - override /dataloader: BasicDataloader
+  - override /model: FlexibleRecurrentVideoSR
+  - override /litmodule: LitStepBased
+  - override /trainer: MixedPrecisionTrainer
+  - override /optimizer: AdamW
+  - override /dataset: DatasetVideoRecurrentREDS
+
+model:
+  feat_ch: 128
+  num_feat_blocks: 5
+  num_stages: 4
+
+  fusions: 
+  - _target_: modules.fusion.FlowGuidedDeformableConcatFusion
+    feat_ch: 128
+    num_blocks: 4
+    kernel_size: 3
+    use_residual_offsets: true
+    offset_hidden_ch: 64
+    use_final_residual: true
+
+ema:
+  enabled: true
+  decay: 0.999
+  start_step: 10000
+  save_last_ema: true
+  ema_ckpt_name: last_ema.ckpt
+  use_buffers: true
+
+  save_on_validation: true
+  latest_ema_ckpt_name: latest_ema.ckpt
+
+trainer:
+  max_steps: 200000
+  val_check_interval: 5000
+  check_val_every_n_epoch: null
+
+dataloader:
+  train:
+    drop_last: true
+
+dataset:
+  seq_len: 15
+  val:
+    max_samples: 1000
+
+
+optimizer:
+  lr: 5e-5

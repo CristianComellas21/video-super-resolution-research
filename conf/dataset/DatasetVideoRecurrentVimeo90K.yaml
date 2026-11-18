@@ -1,0 +1,34 @@
+
+_target_: datasets.DatasetVideoRecurrent.Dataset
+
+dataname: Vimeo90k_sep
+seq_len: 7
+stride: 1
+scale: 4
+meta_info_file: null
+max_depth: 2
+max_samples: null
+spatial_crop_size: 64
+
+train:
+  dataroot_gt: ${path.data_dir}/${..dataname}/sequence_hr
+  dataroot_lq: ${path.data_dir}/${..dataname}/sequence_lr_x4
+  meta_info_file: ${path.data_dir}/${..dataname}/sep_trainlist.txt
+  spatial_crop_mode: random
+  use_hflip: true
+  use_vflip: true
+  use_rot: true
+  random_reverse: false
+
+val:
+  dataroot_gt: ${path.data_dir}/${..dataname}/sequence_hr
+  dataroot_lq: ${path.data_dir}/${..dataname}/sequence_lr_x4
+  meta_info_file: ${path.data_dir}/${..dataname}/sep_testlist.txt
+  spatial_crop_mode: center
+  use_hflip: false
+  use_vflip: false
+  use_rot: false
+  random_reverse: false
+  max_samples: 1000
+
+test: {}
