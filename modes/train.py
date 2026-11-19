@@ -374,6 +374,7 @@ def train(cfg):
         train_dataloaders=train_dataloader,
         val_dataloaders=val_dataloader,
         ckpt_path=fit_ckpt_path,
+        weights_only=False,
     )    
     trainer.save_checkpoint(checkpoints_path / Path("stopped.ckpt"))    
     log.info("Training finished!")
