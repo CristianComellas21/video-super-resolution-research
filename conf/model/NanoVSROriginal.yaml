@@ -3,3 +3,4 @@ version: 644k # Literal['226k', '644k', '1.7m', '5.4m']
 weights_root: ${hydra:runtime.cwd}/checkpoints
 output_mode: center
 deploy: false
+reparameterize: true

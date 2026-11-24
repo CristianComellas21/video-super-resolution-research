@@ -211,6 +211,7 @@ class Model(NanoVSR_original):
         weights_root: str | Path | None = None,
         output_mode: OutputMode = OutputMode.CENTER,
         deploy: bool = False,
+        reparameterize: bool = True,
     ):
         config = NANOVSR_CONFIGS[version]
 
@@ -231,6 +232,11 @@ class Model(NanoVSR_original):
         # Load pretrained weights automatically
         if self.weights_path is not None:
             self.load_pretrained()
+
+        
+        if reparameterize:
+            self.eval()
+            self.switch_to_deploy()
 
     def load_pretrained(self) -> None:
         if self.weights_path is None:
